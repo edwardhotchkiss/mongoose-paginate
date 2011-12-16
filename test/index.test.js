@@ -107,6 +107,18 @@ vows.describe('pagination module basic test')
 })
 
 .addBatch({
+  'when paginating BlogEntry querying for all documents, with page 1, 10 per page':{
+    topic:function(){
+      BlogEntry.paginate({}, 1, 10, this.callback);
+    },
+    'there should be no errors and results.length should be 10':function(error, results){
+      assert.equal(error, null);
+      assert.equal(results.length, 10);
+    }
+  }
+})
+
+.addBatch({
   'when deleting all of our 100 dummy documents with our test mongodb string':{
     topic:function(){
       teardown(this.callback);
