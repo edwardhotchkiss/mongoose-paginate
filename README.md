@@ -1,5 +1,5 @@
 
-# Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginates.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
+# Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
 > Mongoose ORM (NodeJS) Document Query Pagination
 
