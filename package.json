@@ -1,0 +1,28 @@
+{
+  "author":"Edward Hotchkiss <e@ingk.com>",
+  "name":"mongoose-paginate",
+  "description":"",
+  "version":"0.0.1",
+  "repository":{
+    "type":"git",
+    "url":"git://github.com/edwardhotchkiss/mongoose-paginate.git"
+  },
+  "keywords":["mongoose","paginate","sort","results","page"],
+  "engines":{
+    "node":">= 0.6.0 < 0.7.0"
+  },
+  "dependencies":{
+    "mongoose":"2.4.6"
+  },
+  "devDependencies":{
+    "vows":"0.6.0"
+  },
+  "main":"./lib/mongoose-paginate",
+  "licenses":[{
+    "type":"MIT",
+    "url":"http://github.com/edwardhotchkiss/mongoose-paginate/LICENSE"
+  }],
+  "scripts":{
+    "test":"vows test/*.test.js --spec"
+  }
+}
