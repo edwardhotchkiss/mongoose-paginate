@@ -1,7 +1,7 @@
 
 # Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginates.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
-> Mongoose ORM (NodeJS) Query Document then Paginate Results
+> Mongoose ORM (NodeJS) Document Query Pagination
 
 ## Installation
 
@@ -12,7 +12,17 @@ $ npm install mongoose-paginate
 ## Usage 
 
 ```javascript
+var paginate = require('mongoose-paginate');
 
+MyModel.paginate({}, 2, 10, function(error, paginatedResults) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log(paginatedResults);
+  }
+}
+
+/* EOF */
 ```
 
 ## Run Tests
