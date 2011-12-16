@@ -107,13 +107,14 @@ vows.describe('pagination module basic test')
 })
 
 .addBatch({
-  'when paginating BlogEntry querying for all documents, with page 1, 10 per page':{
+  'when paginating BlogEntry querying for all documents, with page 2, 10 per page':{
     topic:function(){
-      BlogEntry.paginate({}, 1, 10, this.callback);
+      BlogEntry.paginate({}, 2, 10, this.callback);
     },
-    'there should be no errors and results.length should be 10':function(error, results){
+    'there should be no errors and results.length should be 10, and the first result should contain the correct # (11)':function(error, results){
       assert.equal(error, null);
       assert.equal(results.length, 10);
+      assert.equal(/#11/.test(results[0].title), true);
     }
   }
 })
