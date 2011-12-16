@@ -1,7 +1,7 @@
 
 # Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginates.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
-> ...
+> Mongoose ORM (NodeJS) Query Document then Paginate Results
 
 ## Installation
 

@@ -1,7 +1,7 @@
 {
   "author":"Edward Hotchkiss <e@ingk.com>",
   "name":"mongoose-paginate",
-  "description":"",
+  "description":"Mongoose ORM (NodeJS) Query Document then Paginate Results",
   "version":"0.0.1",
   "repository":{
     "type":"git",
