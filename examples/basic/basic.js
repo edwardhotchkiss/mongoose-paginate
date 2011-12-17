@@ -8,10 +8,11 @@
 
 var paginate = require('mongoose-paginate');
 
-MyModel.paginate({}, 2, 10, function(error, paginatedResults) {
+MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
   if (error) {
     console.error(error);
   } else {
+  	console.log('Pages:', pageCount);
     console.log(paginatedResults);
   }
 }

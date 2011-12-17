@@ -111,7 +111,7 @@ vows.describe('pagination module basic test')
     topic:function(){
       BlogEntry.paginate({}, 2, 10, this.callback);
     },
-    'there should be no errors and results.length should be 10, and the first result should contain the correct # (11)':function(error, results){
+    'there should be no errors and results.length should be 10, and the first result should contain the correct # (11)':function(error, pageCount, results){
       assert.equal(error, null);
       assert.equal(results.length, 10);
       assert.equal(/#11/.test(results[0].title), true);
