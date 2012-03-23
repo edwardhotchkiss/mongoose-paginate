@@ -9,7 +9,7 @@
   },
   "keywords":["mongoose","paginate","sort","results","page"],
   "engines":{
-    "node":">= 0.6.0 < 0.7.0"
+    "node":">= 0.6.11 < 0.8.0"
   },
   "dependencies":{
     "mongoose":"2.5.3"
