@@ -10,6 +10,9 @@
     "type":"git",
     "url":"git://github.com/edwardhotchkiss/mongoose-paginate.git"
   },
+  "bugs": {
+    "url": "https://github.com/edwardhotchkiss/mongoose-paginate/issues"
+  },
   "homepage": "http://github.com/edwardhotchkiss/mongoose-paginate/",
   "keywords":["mongoose","paginate","sort","results","page"],
   "engines":{
