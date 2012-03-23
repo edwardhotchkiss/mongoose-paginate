@@ -15,7 +15,7 @@
     "mongoose":"2.4.6"
   },
   "devDependencies":{
-    "vows":"0.6.0"
+    "vows":"0.6.2"
   },
   "main":"./lib/mongoose-paginate",
   "licenses":[{
