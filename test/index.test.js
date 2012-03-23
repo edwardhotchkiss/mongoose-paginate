@@ -1,25 +1,25 @@
 
-/*!
-  Core Modules
+/**
+ * require
  */
 
-var vows = require('vows'),
-    assert = require('assert'),
-    mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId,
+var vows = require('vows')
+  , assert = require('assert')
+  , mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+  , ObjectId = Schema.ObjectId
     paginate = require('../lib/mongoose-paginate');
 
-/*!
-  Connect to MongoDB with Mongoose
+/**
+ * connect to MongoDB with Mongoose
  */
 
 var MongoDB = process.env.MONGO_DB || 'mongodb://localhost/test';
 
 mongoose.connect(MongoDB);
 
-/*!
-  Setup
+/**
+ * setup
  */
 
 var BlogSchema = new Schema({
@@ -51,8 +51,8 @@ function setup(callback){
   };
 }
 
-/*!
-  Teardown
+/**
+ * teardown
  */
 
 function teardown(callback){
@@ -81,9 +81,7 @@ function teardown(callback){
   Vows
  */
 
-vows.describe('pagination module basic test')
-
-.addBatch({
+vows.describe('pagination module basic test').addBatch({
   'when requiring `mongoose-paginate`':{
     topic:function(){
       return paginate;
@@ -92,9 +90,7 @@ vows.describe('pagination module basic test')
       assert.equal(typeof(topic), 'object');
     }
   }
-})
-
-.addBatch({
+}).addBatch({
   'when creating 100 dummy documents with our test mongodb string':{
     topic:function(){
       setup(this.callback);
@@ -104,9 +100,7 @@ vows.describe('pagination module basic test')
       assert.equal(resultCount, 100);
     }
   }
-})
-
-.addBatch({
+}).addBatch({
   'when paginating BlogEntry querying for all documents, with page 2, 10 per page':{
     topic:function(){
       BlogEntry.paginate({}, 2, 10, this.callback);
@@ -117,9 +111,7 @@ vows.describe('pagination module basic test')
       assert.equal(/#11/.test(results[0].title), true);
     }
   }
-})
-
-.addBatch({
+}).addBatch({
   'when deleting all of our 100 dummy documents with our test mongodb string':{
     topic:function(){
       teardown(this.callback);
@@ -129,8 +121,6 @@ vows.describe('pagination module basic test')
       assert.equal(resultCount, 100);
     }
   }
-})
-
-.export(module);
+}).export(module);
 
 /* EOF */
