@@ -1,4 +1,13 @@
 
+0.1.2 / 2012-06-10 
+==================
+
+  * [docs] description
+  * [.gitignore] added
+  * [deps] bump mongoose to 2.6.7
+  * [node] engine bump
+  * [changelog] created, updated
+
 0.1.1 / 2012-03-22 
 ==================
 
