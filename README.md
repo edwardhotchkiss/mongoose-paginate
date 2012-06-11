@@ -1,7 +1,7 @@
 
 # Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
-> Mongoose ORM (NodeJS) Document Query Pagination
+> Mongoose ORM (NodeJS/MongoDB) Document Query Pagination
 
 ## Installation
 
@@ -13,10 +13,10 @@ $ npm install mongoose-paginate
 
 ```javascript
 
-/*!
-  Basic example usage of `mongoose-pagination`
-  Querying for `all` {} items in `MyModel`
-  Paginating by second page, 10 items per page (10 results, page 2)
+/**
+ * basic example usage of `mongoose-pagination`
+ * querying for `all` {} items in `MyModel`
+ * paginating by second page, 10 items per page (10 results, page 2)
  */
 
 var paginate = require('mongoose-paginate');
@@ -31,6 +31,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
 }
 
 /* EOF */
+
 ```
 
 ## Run Tests
@@ -38,29 +39,6 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
 ``` bash
 $ npm test
 ```
-
-## License (MIT)
-
-Copyright (c) 2011, Edward Hotchkiss.
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Author: [Edward Hotchkiss][0]
 

@@ -1,5 +1,0 @@
-lib-cov
-**.swp
-*.sw*
-node_modules/
-*.orig

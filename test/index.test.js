@@ -1,7 +1,7 @@
 
 /**
- * require
- */
+ * @list dependencies
+ **/
 
 var vows = require('vows')
   , assert = require('assert')
@@ -12,15 +12,15 @@ var vows = require('vows')
 
 /**
  * connect to MongoDB with Mongoose
- */
+ **/
 
 var MongoDB = process.env.MONGO_DB || 'mongodb://localhost/test';
 
 mongoose.connect(MongoDB);
 
 /**
- * setup
- */
+ * @tests setup
+ **/
 
 var BlogSchema = new Schema({
   id    : ObjectId,
@@ -53,7 +53,7 @@ function setup(callback){
 
 /**
  * teardown
- */
+ **/
 
 function teardown(callback){
   var complete = 0;
@@ -77,9 +77,9 @@ function teardown(callback){
   });
 };
 
-/*!
-  Vows
- */
+/**
+ * @tests vows
+ **/
 
 vows.describe('pagination module basic test').addBatch({
   'when requiring `mongoose-paginate`':{
