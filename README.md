@@ -1,5 +1,5 @@
 
-# Mongoose-Paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
+# mongoose-paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
 > Mongoose ORM (NodeJS/MongoDB) Document Query Pagination
 
@@ -17,7 +17,7 @@ $ npm install mongoose-paginate
  * basic example usage of `mongoose-pagination`
  * querying for `all` {} items in `MyModel`
  * paginating by second page, 10 items per page (10 results, page 2)
- */
+ **/
 
 var paginate = require('mongoose-paginate');
 
