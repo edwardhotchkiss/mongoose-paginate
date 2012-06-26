@@ -1,4 +1,13 @@
 
+1.1.3 / 2012-06-26 
+==================
+
+  * [deps] bump mongoose to 2.7.0
+  * [docs] minor
+  * [node] dont be a dictator, require 0.6.0+ for new engine
+  * [travis] test on 0.6/0.8.0
+  * [changelog] updated
+
 0.1.2 / 2012-06-10 
 ==================
 
