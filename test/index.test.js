@@ -112,7 +112,7 @@ vows.describe('pagination module basic test').addBatch({
       assert.equal(results.length, 10);
     },
     'the first result should contain the correct # (10)':function(error, pageCount, results){
-      assert.equal(/#10/.test(results[0].title), true);
+      assert.equal(results[0].title, 'Item #10');
     }
   }
 }).addBatch({
