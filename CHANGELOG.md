@@ -1,4 +1,10 @@
 
+1.1.5 / 2012-12-13 
+==================
+
+  * [deps] mongoose - bump from older 2.7.0 to 3.5.1
+  * [deps] bumped vows to latest, 0.7.0
+
 1.1.4 / 2012-12-13 
 ==================
 
