@@ -1,4 +1,17 @@
 
+1.1.4 / 2012-12-13 
+==================
+
+  * [dist] version bump
+  * [package] >= 0.8.0
+  * [travis, tests] only test master branch
+  * [travis, tests] only test 0.8
+  * Merge pull request #2 from Pechalka/master
+  * fix zero count
+  * fix count
+  * Merge pull request #1 from colkito/patch-1
+  * Update for express 3.0
+
 1.1.3 / 2012-06-26 
 ==================
 
