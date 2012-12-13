@@ -40,6 +40,6 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
 $ npm test
 ```
 
-## Author: [Edward Hotchkiss][0]
+### Author: [Edward Hotchkiss][0]
 
 [0]: http://edwardhotchkiss.com/
