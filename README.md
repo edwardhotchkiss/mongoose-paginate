@@ -1,4 +1,3 @@
-
 # mongoose-paginate - [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate)
 
 > Mongoose ORM (NodeJS/MongoDB) Document Query Pagination
@@ -28,7 +27,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
   	console.log('Pages:', pageCount);
     console.log(paginatedResults);
   }
-}
+});
 
 /* EOF */
 
