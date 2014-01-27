@@ -111,8 +111,8 @@ vows.describe('pagination module basic test').addBatch({
     'results.length should be 10, and the first result should contain the correct # (11)':function(error, pageCount, results){
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct # (10)':function(error, pageCount, results){
-      assert.equal(results[0].title, 'Item #10');
+    'the first result should contain the correct # (11)':function(error, pageCount, results){
+      assert.equal(results[0].title, 'Item #11');
     }
   }
 }).addBatch({
