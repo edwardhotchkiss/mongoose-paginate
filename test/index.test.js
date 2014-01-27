@@ -108,10 +108,10 @@ vows.describe('pagination module basic test').addBatch({
     'there should be no errors':function(error, pageCount, results){
       assert.equal(error, null);
     },
-    'results.length should be 10, and the first result should contain the correct # (11)':function(error, pageCount, results) {
+    'results.length should be 10, and the first result should contain the correct index #(11)':function(error, pageCount, results) {
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct # (11)':function(error, pageCount, results) {
+    'the first result should contain the correct index #(11)':function(error, pageCount, results) {
       assert.equal(results[0].title, 'Item #11');
     },
     'the column entry should be undefined':function(error, pageCount, results) {
