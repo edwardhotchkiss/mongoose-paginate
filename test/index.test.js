@@ -103,7 +103,7 @@ vows.describe('pagination module basic test').addBatch({
 }).addBatch({
   'when paginating BlogEntry querying for all documents, with page 2, 10 per page':{
     topic:function(){
-      BlogEntry.paginate({}, 2, 10, this.callback);
+      BlogEntry.paginate({}, 2, 10, this.callback, {columns: 'title'});
     },
     'there should be no errors':function(error, pageCount, results){
       assert.equal(error, null);
@@ -113,6 +113,9 @@ vows.describe('pagination module basic test').addBatch({
     },
     'the first result should contain the correct # (11)':function(error, pageCount, results){
       assert.equal(results[0].title, 'Item #11');
+    },
+    'the column entry should be undefined':function(error, pageCount, results){
+      assert.equal(typeof(results[0].entry), 'undefined');
     }
   }
 }).addBatch({
