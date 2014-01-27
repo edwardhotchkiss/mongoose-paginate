@@ -43,7 +43,7 @@ function setup(callback){
         console.error(error);
       } else {
         complete++;
-        if (complete === 100){
+        if (complete === 100) {
           callback(null, 100);
         }
       }
@@ -86,7 +86,7 @@ vows.describe('pagination module basic test').addBatch({
     topic:function(){
       return paginate;
     },
-    'there should be no errors and paginate should be an object':function(topic){
+    'there should be no errors and paginate should be an object':function(topic) {
       assert.equal(typeof(topic), 'object');
     }
   }
@@ -95,7 +95,7 @@ vows.describe('pagination module basic test').addBatch({
     topic:function(){
       setup(this.callback);
     },
-    'there should be no errors and resultCount should be 100':function(error, resultCount){
+    'there should be no errors and resultCount should be 100':function(error, resultCount) {
       assert.equal(error, null);
       assert.equal(resultCount, 100);
     }
@@ -108,13 +108,13 @@ vows.describe('pagination module basic test').addBatch({
     'there should be no errors':function(error, pageCount, results){
       assert.equal(error, null);
     },
-    'results.length should be 10, and the first result should contain the correct # (11)':function(error, pageCount, results){
+    'results.length should be 10, and the first result should contain the correct # (11)':function(error, pageCount, results) {
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct # (11)':function(error, pageCount, results){
+    'the first result should contain the correct # (11)':function(error, pageCount, results) {
       assert.equal(results[0].title, 'Item #11');
     },
-    'the column entry should be undefined':function(error, pageCount, results){
+    'the column entry should be undefined':function(error, pageCount, results) {
       assert.equal(typeof(results[0].entry), 'undefined');
     }
   }
@@ -123,11 +123,9 @@ vows.describe('pagination module basic test').addBatch({
     topic:function(){
       teardown(this.callback);
     },
-    'there should be no errors and resultCount should be a number':function(error, resultCount){
+    'there should be no errors and resultCount should be a number':function(error, resultCount) {
       assert.equal(error, null);
       assert.equal(resultCount, 100);
     }
   }
 }).export(module);
-
-/* EOF */

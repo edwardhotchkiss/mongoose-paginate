@@ -29,8 +29,6 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
   }
 });
 
-/* EOF */
-
 ```
 
 ## Run Tests
