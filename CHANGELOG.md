@@ -1,4 +1,15 @@
 
+1.2.0 / 2014-01-27 
+==================
+
+ * [test] elaborate on batch item description
+ * [whitespace, license]
+ * Merge pull request #8 from danilodeveloper/master
+ * test 'entry should be undefined' added
+ * assert fixed
+ * sort bug fixed
+ * added option to return only selected column or columns
+
 1.1.5 / 2012-12-13 
 ==================
 
