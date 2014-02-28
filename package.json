@@ -19,7 +19,7 @@
     "node":">= 0.8.0"
   },
   "dependencies":{
-    "mongoose":"3.5.1"
+    "mongoose":">= 3.5.1"
   },
   "devDependencies":{
     "vows":"0.7.0"
