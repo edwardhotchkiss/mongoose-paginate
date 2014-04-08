@@ -1,10 +1,10 @@
 {
-  "author":"Edward Hotchkiss <edwardhotchkiss@me.com>",
+  "author":"Edward Hotchkiss <edward@edwardhotchkiss.com>",
   "name":"mongoose-paginate",
   "description":"Mongoose ORM (NodeJS/MongoDB) Document Query Pagination",
   "version":"1.2.0",
   "contributors":[
-    { "name": "Edward Hotchkiss", "email": "edwardhotchkiss@me.com" }
+    { "name": "Edward Hotchkiss", "email": "edward@edwardhotchkiss.com" }
   ],
   "repository":{
     "type":"git",
@@ -19,7 +19,7 @@
     "node":">= 0.8.0"
   },
   "dependencies":{
-    "mongoose":"3.5.1"
+    "mongoose":">=3.8.8"
   },
   "devDependencies":{
     "vows":"0.7.0"

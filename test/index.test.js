@@ -1,42 +1,38 @@
 
-/**
+/*
  * @list dependencies
- **/
+ */
 
-var vows = require('vows')
-  , assert = require('assert')
-  , mongoose = require('mongoose')
-  , Schema = mongoose.Schema
-  , ObjectId = Schema.ObjectId
-    paginate = require('../lib/mongoose-paginate');
+var vows, assert, mongoose, paginate;
 
-/**
+vows = require('vows');
+assert = require('assert');
+mongoose = require('mongoose');
+paginate = require('../lib/mongoose-paginate');
+
+/*
  * connect to MongoDB with Mongoose
- **/
+ */
 
-var MongoDB = process.env.MONGO_DB || 'mongodb://localhost/test';
+mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/test');
 
-mongoose.connect(MongoDB);
-
-/**
+/*
  * @tests setup
- **/
+ */
 
-var BlogSchema = new Schema({
-  id    : ObjectId,
-  title : String,
-  entry : String,
+var TestSchema = new mongoose.Schema({
+  id    : mongoose.Schema.ObjectId,
+  title : String, 
   date  : Date
 });
 
-var BlogEntry = mongoose.model('BlogEntry', BlogSchema);
+var TestEntry = mongoose.model('TestEntries', TestSchema);
 
-function setup(callback){
+function setup(callback) {
   var complete = 0;
   for (var i = 1; i < 101; i++) {
-    var newEntry = new BlogEntry({
+    var newEntry = new TestEntry({
       title : 'Item #'+i,
-      entry : 'This is the entry for Item #'+i
     });
     newEntry.save(function(error, result) {
       if (error) {
@@ -51,13 +47,13 @@ function setup(callback){
   };
 }
 
-/**
+/*
  * teardown
- **/
+ */
 
 function teardown(callback){
   var complete = 0;
-  BlogEntry.find({}, function(error, results) {
+  TestEntry.find({}, function(error, results) {
     if (error) {
       callback(error, null);
     } else {
@@ -77,9 +73,9 @@ function teardown(callback){
   });
 };
 
-/**
+/*
  * @tests vows
- **/
+ */
 
 vows.describe('pagination module basic test').addBatch({
   'when requiring `mongoose-paginate`':{
@@ -90,7 +86,9 @@ vows.describe('pagination module basic test').addBatch({
       assert.equal(typeof(topic), 'object');
     }
   }
-}).addBatch({
+})
+
+.addBatch({
   'when creating 100 dummy documents with our test mongodb string':{
     topic:function(){
       setup(this.callback);
@@ -100,25 +98,60 @@ vows.describe('pagination module basic test').addBatch({
       assert.equal(resultCount, 100);
     }
   }
-}).addBatch({
-  'when paginating BlogEntry querying for all documents, with page 2, 10 per page':{
+})
+
+.addBatch({
+  'when paginating TestEntry querying for all documents, with page 1, 10 results per page':{
     topic:function(){
-      BlogEntry.paginate({}, 2, 10, this.callback, {columns: 'title'});
+      TestEntry.paginate({}, 1, 10, this.callback, { columns: 'title' });
     },
-    'there should be no errors':function(error, pageCount, results){
+    'there should be no errors':function(error, pageCount, results) {
       assert.equal(error, null);
     },
-    'results.length should be 10, and the first result should contain the correct index #(11)':function(error, pageCount, results) {
+    'results.length should be 10':function(error, pageCount, results) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(1)':function(error, pageCount, results) {
+      assert.equal(results[0].title, 'Item #1');
+    }
+  }
+})
+
+.addBatch({
+  'when paginating TestEntry querying for all documents, with page 2, 10 results per page':{
+    topic:function(){
+      TestEntry.paginate({}, 2, 10, this.callback, { columns: 'title' });
+    },
+    'there should be no errors':function(error, pageCount, results) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results) {
       assert.equal(results.length, 10);
     },
     'the first result should contain the correct index #(11)':function(error, pageCount, results) {
       assert.equal(results[0].title, 'Item #11');
-    },
-    'the column entry should be undefined':function(error, pageCount, results) {
-      assert.equal(typeof(results[0].entry), 'undefined');
     }
   }
-}).addBatch({
+})
+
+.addBatch({
+  'when paginating TestEntry querying for all documents, with page 10, 11 results per page':{
+    topic:function(){
+      TestEntry.paginate({}, 10, 10, this.callback, { columns: 'title' });
+    },
+    'there should be no errors':function(error, pageCount, results) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(100)':function(error, pageCount, results) {
+      assert.equal(results[9].title, 'Item #100');
+    }
+  }
+})
+
+.addBatch({
   'when deleting all of our 100 dummy documents with our test mongodb string':{
     topic:function(){
       teardown(this.callback);
@@ -128,4 +161,6 @@ vows.describe('pagination module basic test').addBatch({
       assert.equal(resultCount, 100);
     }
   }
-}).export(module);
+})
+
+.export(module);
