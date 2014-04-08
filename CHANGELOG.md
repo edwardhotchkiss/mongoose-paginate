@@ -1,4 +1,11 @@
 
+1.3.0 / 2014-04-07 
+==================
+
+ * [tests, minor] added more tests, cleaned up some minor shit
+ * Merge pull request #11 from rompetoto/master
+ * - Ran JsFormat on code - Removed Unneeded nulls in error callbacks - Added total page count to callback
+
 1.2.0 / 2014-01-27 
 ==================
 
