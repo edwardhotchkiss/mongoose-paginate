@@ -23,28 +23,43 @@ mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/test');
 var TestSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
   title : String, 
-  date  : Date
+  date  : Date,
+  child : { type: mongoose.Schema.ObjectId, ref: 'TestSubEntries' }
 });
 
 var TestEntry = mongoose.model('TestEntries', TestSchema);
 
+var TestSubSchema = new mongoose.Schema({
+  id    : mongoose.Schema.ObjectId,
+  title : String, 
+  date  : Date
+});
+
+var TestSubEntry = mongoose.model('TestSubEntries', TestSubSchema);
+
 function setup(callback) {
-  var complete = 0;
-  for (var i = 1; i < 101; i++) {
-    var newEntry = new TestEntry({
-      title : 'Item #'+i,
-    });
-    newEntry.save(function(error, result) {
-      if (error) {
-        console.error(error);
-      } else {
-        complete++;
-        if (complete === 100) {
-          callback(null, 100);
+  var newSubEntry = new TestSubEntry({
+    title: 'SubItem #1',
+  });
+  newSubEntry.save(function(error, subEntry) {
+    var complete = 0;
+    for (var i = 1; i < 101; i++) {
+      var newEntry = new TestEntry({
+        title : 'Item #'+i,
+        child : subEntry._id,
+      });
+      newEntry.save(function(error, result) {
+        if (error) {
+          console.error(error);
+        } else {
+          complete++;
+          if (complete === 100) {
+            callback(null, 100);
+          }
         }
-      }
-    });
-  };
+      });
+    }
+  });
 }
 
 /*
@@ -52,23 +67,29 @@ function setup(callback) {
  */
 
 function teardown(callback){
-  var complete = 0;
-  TestEntry.find({}, function(error, results) {
+  TestSubEntry.remove({}, function(error) {
     if (error) {
       callback(error, null);
     } else {
-      for (result in results) {
-        results[result].remove(function(error) {
-          if (error) {
-            callback(error, null);
-          } else {
-            complete++;
-            if (complete === 100) {
-              callback(null, 100);
-            }
-          };
-        });
-      };
+      var complete = 0;
+      TestEntry.find({}, function(error, results) {
+        if (error) {
+          callback(error, null);
+        } else {
+          for (result in results) {
+            results[result].remove(function(error) {
+              if (error) {
+                callback(error, null);
+              } else {
+                complete++;
+                if (complete === 100) {
+                  callback(null, 100);
+                }
+              }
+            });
+          }
+        }
+      });
     }
   });
 };
@@ -147,6 +168,26 @@ vows.describe('pagination module basic test').addBatch({
     },
     'the first result should contain the correct index #(100)':function(error, pageCount, results) {
       assert.equal(results[9].title, 'Item #100');
+    }
+  }
+})
+
+.addBatch({
+  'when paginating TestEntry querying for all documents, with page 2, 10 results per page with populate and without columns':{
+    topic:function(){
+      TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child' });
+    },
+    'there should be no errors':function(error, pageCount, results) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(11)':function(error, pageCount, results) {
+      assert.equal(results[0].title, 'Item #11');
+    },
+    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results) {
+      assert.equal(results[0].child.title, 'SubItem #1');
     }
   }
 })
