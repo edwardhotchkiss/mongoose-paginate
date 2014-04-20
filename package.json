@@ -2,7 +2,7 @@
   "author":"Edward Hotchkiss <edward@edwardhotchkiss.com>",
   "name":"mongoose-paginate",
   "description":"Mongoose ORM (NodeJS/MongoDB) Document Query Pagination",
-  "version":"1.4.0",
+  "version":"2.0.0",
   "contributors":[
     { "name": "Edward Hotchkiss", "email": "edward@edwardhotchkiss.com" }
   ],
@@ -14,7 +14,7 @@
     "url": "https://github.com/edwardhotchkiss/mongoose-paginate/issues"
   },
   "homepage": "http://github.com/edwardhotchkiss/mongoose-paginate/",
-  "keywords":["mongoose","paginate","sort","results","page"],
+  "keywords":["mongoose","paginate","sort","results","page","populate"],
   "engines":{
     "node":">= 0.8.0"
   },

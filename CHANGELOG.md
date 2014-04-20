@@ -1,4 +1,9 @@
 
+2.0.0 / 2014-04-20 
+==================
+
+ * [fix] now: mongoose = require(mongoose-paginate);, closes issue #12
+ 
 1.4.0 / 2014-04-20 
 ==================
 
