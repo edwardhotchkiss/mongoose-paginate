@@ -3,12 +3,11 @@
  * @list dependencies
  */
 
-var vows, assert, mongoose, paginate;
+var vows, assert, mongoose;
 
 vows = require('vows');
 assert = require('assert');
-mongoose = require('mongoose');
-paginate = require('../lib/mongoose-paginate');
+mongoose = require('../lib/mongoose-paginate');
 
 /*
  * connect to MongoDB with Mongoose
@@ -98,10 +97,12 @@ function teardown(callback){
  * @tests vows
  */
 
-vows.describe('pagination module basic test').addBatch({
+vows.describe('pagination module basic tests')
+
+.addBatch({
   'when requiring `mongoose-paginate`':{
     topic:function(){
-      return paginate;
+      return mongoose;
     },
     'there should be no errors and paginate should be an object':function(topic) {
       assert.equal(typeof(topic), 'object');
