@@ -1,4 +1,15 @@
 
+1.4.0 / 2014-04-20 
+==================
+
+ * [tests, rename]
+ * Merge pull request #13 from t-yamo/master
+ * support populate
+ * [changelog, dist, version]
+ * [tests, minor] added more tests, cleaned up some minor shit
+ * Merge pull request #11 from rompetoto/master
+ * - Ran JsFormat on code - Removed Unneeded nulls in error callbacks - Added total page count to callback
+
 1.3.0 / 2014-04-07 
 ==================
 
