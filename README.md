@@ -20,7 +20,7 @@ $ npm install mongoose-paginate
 
 var mongoose = require('mongoose-paginate');
 
-MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults) {
+MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
     console.error(error);
   } else {
