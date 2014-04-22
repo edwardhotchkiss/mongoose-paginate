@@ -152,6 +152,9 @@ vows.describe('pagination module basic tests')
     },
     'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
       assert.equal(results[0].title, 'Item #11');
+    },
+    'there should be 100 items as results':function(error, pageCount, results, count) {
+      assert.equal(count, 100);
     }
   }
 })
