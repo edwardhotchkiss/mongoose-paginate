@@ -1,4 +1,16 @@
 
+2.2.0 / 2014-04-21 
+==================
+
+ * [dist] bump to 2.1.0
+ * [tests] total item count arg
+ * [minor, format]
+ * Merge branch 'master' of github.com:edwardhotchkiss/mongoose-paginate
+ * [args, count] pass in
+ * [dist] bump!
+ * Merge pull request #14 from t-yamo/master
+ * add itemCount to usage
+
 2.0.0 / 2014-04-20 
 ==================
 
