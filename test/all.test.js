@@ -144,13 +144,13 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, 2, 10, this.callback, { columns: 'title' });
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
+    'results.length should be 10':function(error, pageCount, results, count) {
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results) {
+    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
       assert.equal(results[0].title, 'Item #11');
     }
   }
@@ -161,13 +161,13 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, 10, 10, this.callback, { columns: 'title' });
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
+    'results.length should be 10':function(error, pageCount, results, count) {
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct index #(100)':function(error, pageCount, results) {
+    'the first result should contain the correct index #(100)':function(error, pageCount, results, count) {
       assert.equal(results[9].title, 'Item #100');
     }
   }
@@ -178,16 +178,16 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child' });
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
+    'results.length should be 10':function(error, pageCount, results, count) {
       assert.equal(results.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results) {
+    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
       assert.equal(results[0].title, 'Item #11');
     },
-    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results) {
+    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results, count) {
       assert.equal(results[0].child.title, 'SubItem #1');
     }
   }
