@@ -197,6 +197,23 @@ vows.describe('pagination module basic tests')
 })
 
 .addBatch({
+  'when paginating TestEntry querying for all documents, with page 1, 10 results per page, sorting reverse by title':{
+    topic:function(){
+      TestEntry.paginate({}, 1, 10, this.callback, { sortBy : { title : -1 } });
+    },
+    'there should be no errors':function(error, pageCount, results) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(99)':function(error, pageCount, results) {
+      assert.equal(results[0].title, 'Item #99');
+    }
+  }
+})
+
+.addBatch({
   'when deleting all of our 100 dummy documents with our test mongodb string':{
     topic:function(){
       teardown(this.callback);
