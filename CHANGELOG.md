@@ -1,4 +1,11 @@
 
+2.2.0 / 2014-04-29 
+==================
+
+ * [dist] bump!
+ * [docs, sort, advanced] added docs for sort, select
+ * [tests, sort] added sortBy test
+
 2.1.0 / 2014-04-21 
 ==================
 
