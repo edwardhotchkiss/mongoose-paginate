@@ -1,4 +1,14 @@
 
+3.0.0 / 2014-06-12 
+==================
+
+ * [major, dist] use as mongoosejs plugin now
+ * [minor] format shit
+ * Merge branch 'niftylettuce-master'
+ * [pr, merge, minors, travis] use node v0.10.x
+ * Converted `mongoose-paginate` to a Mongoose plugin
+ * [travis, fix] @travis-ci does not support ^ apparently / older npm module for packages, regress to >= or ~ hmm
+
 2.3.0 / 2014-06-12 
 ==================
 
