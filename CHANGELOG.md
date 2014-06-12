@@ -1,4 +1,13 @@
 
+2.3.0 / 2014-06-12 
+==================
+
+ * [ocd]
+ * [package, contribs] added @niftylettuce
+ * Merge pull request #18 from niftylettuce/master
+ * Integrated async, fixed tests for collection removal
+ * Update README.md
+
 2.2.0 / 2014-04-29 
 ==================
 
