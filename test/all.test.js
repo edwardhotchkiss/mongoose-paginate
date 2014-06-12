@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/test');
 
 var TestSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
-  title : String, 
+  title : String,
   date  : Date,
   child : { type: mongoose.Schema.ObjectId, ref: 'TestSubEntries' }
 });
@@ -30,7 +30,7 @@ var TestEntry = mongoose.model('TestEntries', TestSchema);
 
 var TestSubSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
-  title : String, 
+  title : String,
   date  : Date
 });
 
@@ -41,22 +41,14 @@ function setup(callback) {
     title: 'SubItem #1',
   });
   newSubEntry.save(function(error, subEntry) {
-    var complete = 0;
-    for (var i = 1; i < 101; i++) {
+    var complete = 1;
+    for (var i=1; i<=100;i++) {
       var newEntry = new TestEntry({
         title : 'Item #'+i,
         child : subEntry._id,
       });
-      newEntry.save(function(error, result) {
-        if (error) {
-          console.error(error);
-        } else {
-          complete++;
-          if (complete === 100) {
-            callback(null, 100);
-          }
-        }
-      });
+      newEntry.save(increment(complete, callback));
+      complete++;
     }
   });
 }
@@ -70,28 +62,32 @@ function teardown(callback){
     if (error) {
       callback(error, null);
     } else {
-      var complete = 0;
       TestEntry.find({}, function(error, results) {
         if (error) {
           callback(error, null);
         } else {
-          for (result in results) {
-            results[result].remove(function(error) {
-              if (error) {
-                callback(error, null);
-              } else {
-                complete++;
-                if (complete === 100) {
-                  callback(null, 100);
-                }
-              }
-            });
+          var complete = 1;
+          for (var result in results) {
+            results[result].remove(increment(complete, callback))
+            complete++;
           }
         }
       });
     }
   });
-};
+}
+
+function increment(complete, callback) {
+  return function(error) {
+    if (error) {
+      console.error(error);
+    } else {
+      if (complete === 100) {
+        callback(null, 100);
+      }
+    }
+  }
+}
 
 /*
  * @tests vows
@@ -106,6 +102,28 @@ vows.describe('pagination module basic tests')
     },
     'there should be no errors and paginate should be an object':function(topic) {
       assert.equal(typeof(topic), 'object');
+    }
+  }
+})
+
+.addBatch({
+  'when removing all documents in TestEntry collection':{
+    topic:function(){
+      TestEntry.remove({}, this.callback);
+    },
+    'there should be no errors': function(error, numRemoved) {
+      assert.equal(error, null);
+    }
+  }
+})
+
+.addBatch({
+  'when removing all documents in TestSubEntry collection':{
+    topic:function(){
+      TestSubEntry.remove({}, this.callback);
+    },
+    'there should be no errors': function(error, numRemoved) {
+      assert.equal(error, null);
     }
   }
 })

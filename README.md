@@ -1,5 +1,5 @@
 
-# mongoose-paginate [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate) [![Git Tip](http://img.shields.io/gittip/edwardhotchkiss.svg)](https://www.gittip.com/edwardhotchkiss/) 
+# mongoose-paginate [![Build Status](https://secure.travis-ci.org/edwardhotchkiss/mongoose-paginate.png)](http://travis-ci.org/edwardhotchkiss/mongoose-paginate) [![Git Tip](http://img.shields.io/gittip/edwardhotchkiss.svg)](https://www.gittip.com/edwardhotchkiss/)
 
 > Mongoose ORM (NodeJS/MongoDB) Document Query Pagination
 
@@ -9,11 +9,11 @@
 $ npm install mongoose-paginate
 ```
 
-## Usage 
+## Usage
 
 #### Basic
 
-```javascript
+```js
 
 /*
  * basic example usage of `mongoose-pagination`
@@ -36,7 +36,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
 
 #### Advanced
 
-```javascript
+```js
 
 /*
  * basic example usage of `mongoose-pagination`
@@ -67,6 +67,10 @@ $ npm test
 
 [0]: http://edwardhotchkiss.com/
 
+
+### Contributors
+
+* [Nick Baugh](https://github.com/niftylettuce)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/edwardhotchkiss/mongoose-paginate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
