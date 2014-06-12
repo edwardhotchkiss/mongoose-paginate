@@ -6,7 +6,7 @@
 ## Installation
 
 ```bash
-$ npm install mongoose-paginate
+npm install -S mongoose-paginate
 ```
 
 ## Usage
@@ -21,7 +21,9 @@ $ npm install mongoose-paginate
  * paginating by second page, 10 items per page (10 results, page 2)
  */
 
-var mongoose = require('mongoose-paginate');
+var mongoosePaginate = require('mongoose-paginate');
+
+MyModel.plugin(mongoosePaginate)
 
 MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
@@ -44,7 +46,9 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
  * paginating by second page, 10 items per page (10 results, page 2)
  */
 
-var mongoose = require('mongoose-paginate');
+var mongoosePaginate = require('mongoose-paginate');
+
+MyModel.plugin(mongoosePaginate)
 
 MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
