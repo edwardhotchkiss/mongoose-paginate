@@ -3,11 +3,10 @@
  * @list dependencies
  */
 
-var vows, assert, mongoose;
-
-vows = require('vows');
-assert = require('assert');
-mongoose = require('../lib/mongoose-paginate');
+var vows = require('vows')
+  , assert = require('assert')
+  , mongoose = require('mongoose')
+  , mongoosePaginate = require('../lib/mongoose-paginate');
 
 /*
  * connect to MongoDB with Mongoose
@@ -26,6 +25,8 @@ var TestSchema = new mongoose.Schema({
   child : { type: mongoose.Schema.ObjectId, ref: 'TestSubEntries' }
 });
 
+TestSchema.plugin(mongoosePaginate);
+
 var TestEntry = mongoose.model('TestEntries', TestSchema);
 
 var TestSubSchema = new mongoose.Schema({
@@ -33,6 +34,8 @@ var TestSubSchema = new mongoose.Schema({
   title : String,
   date  : Date
 });
+
+TestSubSchema.plugin(mongoosePaginate);
 
 var TestSubEntry = mongoose.model('TestSubEntries', TestSubSchema);
 

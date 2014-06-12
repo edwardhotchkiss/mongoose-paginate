@@ -1,7 +1,7 @@
 {
   "author": "Edward Hotchkiss <edward@edwardhotchkiss.com>",
   "name": "mongoose-paginate",
-  "description": "Mongoose ORM (NodeJS/MongoDB) Document Query Pagination",
+  "description": "Mongoose ORM (Node.js/MongoDB) Document Query Pagination",
   "version": "2.3.0",
   "contributors": [
     {
@@ -30,11 +30,11 @@
     "populate"
   ],
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "dependencies": {
-    "async": ">=0.9.0",
-    "mongoose": ">=3.8.8"
+    "async": "^0.9.0",
+    "mongoose": "^3.8.12"
   },
   "main": "./lib/mongoose-paginate",
   "licenses": [
@@ -47,6 +47,6 @@
     "test": "vows test/*.test.js --spec"
   },
   "devDependencies": {
-    "vows": ">=0.7.0"
+    "vows": "^0.7.0"
   }
 }
