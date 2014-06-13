@@ -2,7 +2,7 @@
   "author": "Edward Hotchkiss <edward@edwardhotchkiss.com>",
   "name": "mongoose-paginate",
   "description": "Mongoose ORM (Node.js/MongoDB) Document Query Pagination",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "contributors": [
     {
       "name": "Edward Hotchkiss",
