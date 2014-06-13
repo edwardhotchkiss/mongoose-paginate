@@ -3,6 +3,8 @@
 
 > Mongoose ORM (NodeJS/MongoDB) Document Query Pagination
 
+To be used in combination with view pagination middleware such as [express-paginate](https://github.com/niftylettuce/express-paginate).
+
 ## Installation
 
 ```bash
