@@ -1,4 +1,11 @@
 
+3.1.0 / 2014-06-12 
+==================
+
+ * [dist] note @niftylettuce express-paginate
+ * Merge pull request #21 from niftylettuce/master
+ * Added note for express-paginate
+
 3.0.0 / 2014-06-12 
 ==================
 
