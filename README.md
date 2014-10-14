@@ -43,7 +43,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
 ```js
 
 /*
- * basic example usage of `mongoose-pagination`
+ * advanced example usage of `mongoose-pagination`
  * querying for `{ columns: 'title', { populate: 'some_ref' }, { sortBy : { title : -1 } }` items in `MyModel`
  * paginating by second page, 10 items per page (10 results, page 2)
  */
@@ -59,7 +59,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
     console.log('Pages:', pageCount);
     console.log(paginatedResults);
   }
-}, { columns: 'title', { populate: 'some_ref' }, { sortBy : { title : -1 } });
+}, { columns: 'title', populate: 'some_ref', sortBy : { title : -1 });
 
 ```
 
