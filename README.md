@@ -59,7 +59,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
     console.log('Pages:', pageCount);
     console.log(paginatedResults);
   }
-}, { columns: 'title', populate: 'some_ref', sortBy : { title : -1 });
+}, { columns: 'title', populate: {path: 'some_ref', select: 'some fields'}, sortBy : { title : -1 });
 
 ```
 
