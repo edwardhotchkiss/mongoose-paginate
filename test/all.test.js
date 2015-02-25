@@ -161,6 +161,23 @@ vows.describe('pagination module basic tests')
 })
 
 .addBatch({
+  'when paginating without page and limit, use default values 1 and 10':{
+    topic:function(){
+      TestEntry.paginate({}, {}, this.callback);
+    },
+    'there should be no errors':function(error, pageCount, results) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(1)':function(error, pageCount, results) {
+      assert.equal(results[0].title, 'Item #1');
+    }
+  }
+})
+
+.addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page':{
     topic:function(){
       TestEntry.paginate({}, {page: 2, limit: 10, columns: 'title' }, this.callback);
