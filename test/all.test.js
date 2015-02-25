@@ -1,4 +1,4 @@
-
+'use strict';
 /*
  * @list dependencies
  */
@@ -71,7 +71,7 @@ function teardown(callback){
         } else {
           var complete = 1;
           for (var result in results) {
-            results[result].remove(increment(complete, callback))
+            results[result].remove(increment(complete, callback));
             complete++;
           }
         }
@@ -89,7 +89,7 @@ function increment(complete, callback) {
         callback(null, 100);
       }
     }
-  }
+  };
 }
 
 /*
