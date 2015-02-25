@@ -41,14 +41,14 @@ var TestSubEntry = mongoose.model('TestSubEntries', TestSubSchema);
 
 function setup(callback) {
   var newSubEntry = new TestSubEntry({
-    title: 'SubItem #1',
+    title: 'SubItem #1'
   });
   newSubEntry.save(function(error, subEntry) {
     var complete = 1;
     for (var i=1; i<=100;i++) {
       var newEntry = new TestEntry({
         title : 'Item #'+i,
-        child : subEntry._id,
+        child : subEntry._id
       });
       newEntry.save(increment(complete, callback));
       complete++;
@@ -146,7 +146,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 1, 10 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 1, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 1, limit: 10, columns: 'title'}, this.callback);
     },
     'there should be no errors':function(error, pageCount, results) {
       assert.equal(error, null);
@@ -163,7 +163,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 2, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 2, limit: 10, columns: 'title' }, this.callback);
     },
     'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
@@ -183,7 +183,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 10, 11 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 10, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 10, limit: 10,  columns: 'title' }, this.callback);
     },
     'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
@@ -200,7 +200,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page with populate and without columns':{
     topic:function(){
-      TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child' });
+      TestEntry.paginate({}, {page: 2, limit: 10,  populate: 'child'}, this.callback);
     },
     'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
@@ -220,7 +220,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 1, 10 results per page, sorting reverse by title':{
     topic:function(){
-      TestEntry.paginate({}, 1, 10, this.callback, { sortBy : { title : -1 } });
+      TestEntry.paginate({}, {page: 1, limit: 10, sortBy : { title : -1 } }, this.callback);
     },
     'there should be no errors':function(error, pageCount, results) {
       assert.equal(error, null);

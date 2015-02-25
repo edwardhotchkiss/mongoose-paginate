@@ -27,7 +27,7 @@ var mongoosePaginate = require('mongoose-paginate');
 
 MyModel.plugin(mongoosePaginate)
 
-MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+MyModel.paginate({}, {page: 2, limit: 10}, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
     console.error(error);
   } else {
@@ -52,14 +52,15 @@ var mongoosePaginate = require('mongoose-paginate');
 
 MyModel.plugin(mongoosePaginate)
 
-MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+MyModel.paginate({}, {page: 2, limit: 10, columns: 'title', populate: 'some_ref', sortBy : { title : -1 },
+ function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
     console.error(error);
   } else {
     console.log('Pages:', pageCount);
     console.log(paginatedResults);
   }
-}, { columns: 'title', populate: 'some_ref', sortBy : { title : -1 });
+});
 
 ```
 
