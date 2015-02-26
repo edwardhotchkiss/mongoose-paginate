@@ -121,14 +121,14 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {page: 1, limit: 10, columns: 'title'}, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, results) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(1)':function(error, pageCount, results) {
-      assert.equal(results[0].title, 'Item #1');
+    'the first result should contain the correct index #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #1');
     }
   }
 })
@@ -138,14 +138,14 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {}, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(1)':function(error, pageCount, results) {
-      assert.equal(results[0].title, 'Item #1');
+    'the first result should contain the correct index #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #1');
     }
   }
 })
@@ -155,17 +155,17 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {page: 2, limit: 10, columns: 'title' }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
-      assert.equal(results[0].title, 'Item #11');
+    'the first result should contain the correct index #(11)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #11');
     },
-    'there should be 100 items as results':function(error, pageCount, results, count) {
-      assert.equal(count, 100);
+    'there should be 100 items as results':function(error, result) {
+      assert.equal(result.itemCount, 100);
     }
   }
 })
@@ -175,14 +175,14 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {page: 10, limit: 10,  columns: 'title' }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(100)':function(error, pageCount, results, count) {
-      assert.equal(results[9].title, 'Item #100');
+    'the first result should contain the correct index #(100)':function(error, result) {
+      assert.equal(result.paginatedResults[9].title, 'Item #100');
     }
   }
 })
@@ -192,17 +192,17 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {page: 2, limit: 10,  populate: 'child'}, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
-      assert.equal(results[0].title, 'Item #11');
+    'the first result should contain the correct index #(11)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #11');
     },
-    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results, count) {
-      assert.equal(results[0].child.title, 'SubItem #1');
+    'the first result should contain the correct SubItem #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].child.title, 'SubItem #1');
     }
   }
 })
@@ -212,14 +212,14 @@ vows.describe('pagination module basic tests')
     topic:function(){
       TestEntry.paginate({}, {page: 1, limit: 10, sortBy : { title : -1 } }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(99)':function(error, pageCount, results) {
-      assert.equal(results[0].title, 'Item #99');
+    'the first result should contain the correct index #(99)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #99');
     }
   }
 })
@@ -229,7 +229,7 @@ vows.describe('pagination module basic tests')
     topic:function(){
       teardown(this.callback);
     },
-    'there should be no errors and resultCount should be a number':function(error, resultCount) {
+    'there should be no errors and resultCount should be a number':function(error, result) {
       assert.equal(error, null);
     }
   }
