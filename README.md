@@ -68,7 +68,7 @@ MyModel.paginate({}, {page: 2, limit: 10, columns: 'title', populate: 'some_ref'
 Returning object looks following:
 ```json
 
-{pageCount: 'Number', paginatedResult: 'Number', itemCount: 'Number'}
+{'pageCount': 'Number', 'paginatedResult': 'Number', 'itemCount': 'Number'}
 
 ```
 ## Run Tests
