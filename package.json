@@ -47,6 +47,7 @@
     "test": "vows test/*.test.js --spec"
   },
   "devDependencies": {
-    "vows": "^0.7.0"
+    "vows": "^0.7.0",
+    "chai": "~2.1.0"
   }
 }

@@ -4,7 +4,7 @@
  */
 
 var vows = require('vows')
-  , assert = require('assert')
+  , assert = require('chai').assert
   , mongoose = require('mongoose')
   , mongoosePaginate = require('../lib/mongoose-paginate');
 
@@ -12,22 +12,24 @@ var vows = require('vows')
  * connect to MongoDB with Mongoose
  */
 
-mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/test');
+mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/mongoosePaginateTest');
 
 /*
  * @tests setup
  */
+var testEntriesCollectionName = 'mongoosePaginateTestEntries';
+var testEntriesSubCollectionName = 'mongoosePaginateTestSubEntries';
 
 var TestSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
   title : String,
   date  : Date,
-  child : { type: mongoose.Schema.ObjectId, ref: 'TestSubEntries' }
+  child : { type: mongoose.Schema.ObjectId, ref: testEntriesSubCollectionName }
 });
 
 TestSchema.plugin(mongoosePaginate);
 
-var TestEntry = mongoose.model('TestEntries', TestSchema);
+var TestEntry = mongoose.model(testEntriesCollectionName, TestSchema);
 
 var TestSubSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
@@ -37,21 +39,19 @@ var TestSubSchema = new mongoose.Schema({
 
 TestSubSchema.plugin(mongoosePaginate);
 
-var TestSubEntry = mongoose.model('TestSubEntries', TestSubSchema);
+var TestSubEntry = mongoose.model(testEntriesSubCollectionName, TestSubSchema);
 
 function setup(callback) {
   var newSubEntry = new TestSubEntry({
     title: 'SubItem #1'
   });
   newSubEntry.save(function(error, subEntry) {
-    var complete = 1;
     for (var i=1; i<=100;i++) {
       var newEntry = new TestEntry({
         title : 'Item #'+i,
         child : subEntry._id
       });
-      newEntry.save(increment(complete, callback));
-      complete++;
+      newEntry.save(increment(i, callback));
     }
   });
 }
@@ -61,22 +61,9 @@ function setup(callback) {
  */
 
 function teardown(callback){
-  TestSubEntry.remove({}, function(error) {
-    if (error) {
-      callback(error, null);
-    } else {
-      TestEntry.find({}, function(error, results) {
-        if (error) {
-          callback(error, null);
-        } else {
-          var complete = 1;
-          for (var result in results) {
-            results[result].remove(increment(complete, callback));
-            complete++;
-          }
-        }
-      });
-    }
+  mongoose.connection.collections[testEntriesSubCollectionName.toLowerCase()].drop(function(err) {
+    if(err) console.log(err);
+    mongoose.connection.collections[testEntriesCollectionName.toLowerCase()].drop(callback);
   });
 }
 
@@ -110,23 +97,9 @@ vows.describe('pagination module basic tests')
 })
 
 .addBatch({
-  'when removing all documents in TestEntry collection':{
+  'teardown the collections before running tests':{
     topic:function(){
-      TestEntry.remove({}, this.callback);
-    },
-    'there should be no errors': function(error, numRemoved) {
-      assert.equal(error, null);
-    }
-  }
-})
-
-.addBatch({
-  'when removing all documents in TestSubEntry collection':{
-    topic:function(){
-      TestSubEntry.remove({}, this.callback);
-    },
-    'there should be no errors': function(error, numRemoved) {
-      assert.equal(error, null);
+      teardown(this.callback);
     }
   }
 })
@@ -258,7 +231,6 @@ vows.describe('pagination module basic tests')
     },
     'there should be no errors and resultCount should be a number':function(error, resultCount) {
       assert.equal(error, null);
-      assert.equal(resultCount, 100);
     }
   }
 })
