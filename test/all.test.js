@@ -220,7 +220,7 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page with partial populate and without columns':{
     topic:function(){
-      TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child.title' });
+      TestEntry.paginate({}, 2, 10, this.callback, { populate: ['child.title'] });
     },
     'there should be no errors':function(error, pageCount, results, count) {
       assert.equal(error, null);
