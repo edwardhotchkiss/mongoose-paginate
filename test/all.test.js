@@ -218,6 +218,26 @@ vows.describe('pagination module basic tests')
 })
 
 .addBatch({
+  'when paginating TestEntry querying for all documents, with page 2, 10 results per page with partial populate and without columns':{
+    topic:function(){
+      TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child.title' });
+    },
+    'there should be no errors':function(error, pageCount, results, count) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, pageCount, results, count) {
+      assert.equal(results.length, 10);
+    },
+    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
+      assert.equal(results[0].title, 'Item #11');
+    },
+    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results, count) {
+      assert.equal(results[0].child.title, 'SubItem #1');
+    }
+  }
+})
+
+.addBatch({
   'when paginating TestEntry querying for all documents, with page 1, 10 results per page, sorting reverse by title':{
     topic:function(){
       TestEntry.paginate({}, 1, 10, this.callback, { sortBy : { title : -1 } });
