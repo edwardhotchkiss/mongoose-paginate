@@ -61,6 +61,32 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
   }
 }, { columns: 'title', populate: 'some_ref', sortBy : { title : -1 });
 
+/*
+ * Populating more than one ref
+ */
+ 
+ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('Pages:', pageCount);
+    console.log(paginatedResults);
+  }
+}, { columns: 'title', populate: ['some_ref', 'other_ref'], sortBy : { title : -1 });
+
+/* 
+ * Selecting specific field for population (http://mongoosejs.com/docs/api.html#query_Query-populate)
+ */
+ 
+ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('Pages:', pageCount);
+    console.log(paginatedResults);
+  }
+}, { columns: 'title', populate: [{ path: 'some_ref', select: 'field_a field_b' }, 'other_ref' ], sortBy : { title : -1 });
+
 ```
 
 ## Run Tests
