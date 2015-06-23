@@ -24,9 +24,9 @@ npm install -S mongoose-paginate
  */
 
 var mongoosePaginate = require('mongoose-paginate');
-
-MyModel.plugin(mongoosePaginate)
-
+// var MySchema = new mongoose.Schema({ ... });
+MySchema.plugin(mongoosePaginate)
+// var MyModel = mongoose.model('MyModel', MySchema);
 MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
     console.error(error);
@@ -49,9 +49,9 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
  */
 
 var mongoosePaginate = require('mongoose-paginate');
-
-MyModel.plugin(mongoosePaginate)
-
+// var MySchema = new mongoose.Schema({ ... });
+MySchema.plugin(mongoosePaginate)
+// var MyModel = mongoose.model('MyModel', MySchema);
 MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
   if (error) {
     console.error(error);
@@ -105,4 +105,3 @@ $ npm test
 * [Nick Baugh](https://github.com/niftylettuce)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/edwardhotchkiss/mongoose-paginate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
