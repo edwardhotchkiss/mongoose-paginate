@@ -1,12 +1,11 @@
-
-3.1.0 / 2014-06-12 
+3.1.0 / 2014-06-12
 ==================
 
  * [dist] note @niftylettuce express-paginate
  * Merge pull request #21 from niftylettuce/master
  * Added note for express-paginate
 
-3.0.0 / 2014-06-12 
+3.0.0 / 2014-06-12
 ==================
 
  * [major, dist] use as mongoosejs plugin now
@@ -16,7 +15,7 @@
  * Converted `mongoose-paginate` to a Mongoose plugin
  * [travis, fix] @travis-ci does not support ^ apparently / older npm module for packages, regress to >= or ~ hmm
 
-2.3.0 / 2014-06-12 
+2.3.0 / 2014-06-12
 ==================
 
  * [ocd]
@@ -25,14 +24,14 @@
  * Integrated async, fixed tests for collection removal
  * Update README.md
 
-2.2.0 / 2014-04-29 
+2.2.0 / 2014-04-29
 ==================
 
  * [dist] bump!
  * [docs, sort, advanced] added docs for sort, select
  * [tests, sort] added sortBy test
 
-2.1.0 / 2014-04-21 
+2.1.0 / 2014-04-21
 ==================
 
  * [dist] bump to 2.1.0
@@ -44,12 +43,12 @@
  * Merge pull request #14 from t-yamo/master
  * add itemCount to usage
 
-2.0.0 / 2014-04-20 
+2.0.0 / 2014-04-20
 ==================
 
  * [fix] now: mongoose = require(mongoose-paginate);, closes issue #12
- 
-1.4.0 / 2014-04-20 
+
+1.4.0 / 2014-04-20
 ==================
 
  * [tests, rename]
@@ -60,14 +59,14 @@
  * Merge pull request #11 from rompetoto/master
  * - Ran JsFormat on code - Removed Unneeded nulls in error callbacks - Added total page count to callback
 
-1.3.0 / 2014-04-07 
+1.3.0 / 2014-04-07
 ==================
 
  * [tests, minor] added more tests, cleaned up some minor shit
  * Merge pull request #11 from rompetoto/master
  * - Ran JsFormat on code - Removed Unneeded nulls in error callbacks - Added total page count to callback
 
-1.2.0 / 2014-01-27 
+1.2.0 / 2014-01-27
 ==================
 
  * [test] elaborate on batch item description
@@ -78,13 +77,13 @@
  * sort bug fixed
  * added option to return only selected column or columns
 
-1.1.5 / 2012-12-13 
+1.1.5 / 2012-12-13
 ==================
 
   * [deps] mongoose - bump from older 2.7.0 to 3.5.1
   * [deps] bumped vows to latest, 0.7.0
 
-1.1.4 / 2012-12-13 
+1.1.4 / 2012-12-13
 ==================
 
   * [dist] version bump
@@ -97,7 +96,7 @@
   * Merge pull request #1 from colkito/patch-1
   * Update for express 3.0
 
-1.1.3 / 2012-06-26 
+1.1.3 / 2012-06-26
 ==================
 
   * [deps] bump mongoose to 2.7.0
@@ -106,7 +105,7 @@
   * [travis] test on 0.6/0.8.0
   * [changelog] updated
 
-0.1.2 / 2012-06-10 
+0.1.2 / 2012-06-10
 ==================
 
   * [docs] description
@@ -115,7 +114,7 @@
   * [node] engine bump
   * [changelog] created, updated
 
-0.1.1 / 2012-03-22 
+0.1.1 / 2012-03-22
 ==================
 
   * [package] bugs
