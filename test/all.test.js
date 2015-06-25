@@ -1,10 +1,10 @@
-
+'use strict';
 /*
  * @list dependencies
  */
 
 var vows = require('vows')
-  , assert = require('assert')
+  , assert = require('chai').assert
   , mongoose = require('mongoose')
   , mongoosePaginate = require('../lib/mongoose-paginate');
 
@@ -12,22 +12,24 @@ var vows = require('vows')
  * connect to MongoDB with Mongoose
  */
 
-mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/test');
+mongoose.connect(process.env.MONGO_DB || 'mongodb://localhost/mongoosePaginateTest');
 
 /*
  * @tests setup
  */
+var testEntriesCollectionName = 'mongoosePaginateTestEntries';
+var testEntriesSubCollectionName = 'mongoosePaginateTestSubEntries';
 
 var TestSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
   title : String,
   date  : Date,
-  child : { type: mongoose.Schema.ObjectId, ref: 'TestSubEntries' }
+  child : { type: mongoose.Schema.ObjectId, ref: testEntriesSubCollectionName }
 });
 
 TestSchema.plugin(mongoosePaginate);
 
-var TestEntry = mongoose.model('TestEntries', TestSchema);
+var TestEntry = mongoose.model(testEntriesCollectionName, TestSchema);
 
 var TestSubSchema = new mongoose.Schema({
   id    : mongoose.Schema.ObjectId,
@@ -37,21 +39,19 @@ var TestSubSchema = new mongoose.Schema({
 
 TestSubSchema.plugin(mongoosePaginate);
 
-var TestSubEntry = mongoose.model('TestSubEntries', TestSubSchema);
+var TestSubEntry = mongoose.model(testEntriesSubCollectionName, TestSubSchema);
 
 function setup(callback) {
   var newSubEntry = new TestSubEntry({
-    title: 'SubItem #1',
+    title: 'SubItem #1'
   });
   newSubEntry.save(function(error, subEntry) {
-    var complete = 1;
     for (var i=1; i<=100;i++) {
       var newEntry = new TestEntry({
         title : 'Item #'+i,
-        child : subEntry._id,
+        child : subEntry._id
       });
-      newEntry.save(increment(complete, callback));
-      complete++;
+      newEntry.save(increment(i, callback));
     }
   });
 }
@@ -61,22 +61,9 @@ function setup(callback) {
  */
 
 function teardown(callback){
-  TestSubEntry.remove({}, function(error) {
-    if (error) {
-      callback(error, null);
-    } else {
-      TestEntry.find({}, function(error, results) {
-        if (error) {
-          callback(error, null);
-        } else {
-          var complete = 1;
-          for (var result in results) {
-            results[result].remove(increment(complete, callback))
-            complete++;
-          }
-        }
-      });
-    }
+  mongoose.connection.collections[testEntriesSubCollectionName.toLowerCase()].drop(function(err) {
+    if(err) console.log(err);
+    mongoose.connection.collections[testEntriesCollectionName.toLowerCase()].drop(callback);
   });
 }
 
@@ -89,7 +76,7 @@ function increment(complete, callback) {
         callback(null, 100);
       }
     }
-  }
+  };
 }
 
 /*
@@ -110,23 +97,9 @@ vows.describe('pagination module basic tests')
 })
 
 .addBatch({
-  'when removing all documents in TestEntry collection':{
+  'teardown the collections before running tests':{
     topic:function(){
-      TestEntry.remove({}, this.callback);
-    },
-    'there should be no errors': function(error, numRemoved) {
-      assert.equal(error, null);
-    }
-  }
-})
-
-.addBatch({
-  'when removing all documents in TestSubEntry collection':{
-    topic:function(){
-      TestSubEntry.remove({}, this.callback);
-    },
-    'there should be no errors': function(error, numRemoved) {
-      assert.equal(error, null);
+      teardown(this.callback);
     }
   }
 })
@@ -146,16 +119,33 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 1, 10 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 1, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 1, limit: 10, columns: 'title'}, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, results) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(1)':function(error, pageCount, results) {
-      assert.equal(results[0].title, 'Item #1');
+    'the first result should contain the correct index #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #1');
+    }
+  }
+})
+
+.addBatch({
+  'when paginating without page and limit, use default values 1 and 10':{
+    topic:function(){
+      TestEntry.paginate({}, {}, this.callback);
+    },
+    'there should be no errors':function(error, result) {
+      assert.equal(error, null);
+    },
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
+    },
+    'the first result should contain the correct index #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #1');
     }
   }
 })
@@ -163,19 +153,19 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 2, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 2, limit: 10, columns: 'title' }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
-      assert.equal(results[0].title, 'Item #11');
+    'the first result should contain the correct index #(11)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #11');
     },
-    'there should be 100 items as results':function(error, pageCount, results, count) {
-      assert.equal(count, 100);
+    'there should be 100 items as results':function(error, result) {
+      assert.equal(result.itemCount, 100);
     }
   }
 })
@@ -183,16 +173,16 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 10, 11 results per page':{
     topic:function(){
-      TestEntry.paginate({}, 10, 10, this.callback, { columns: 'title' });
+      TestEntry.paginate({}, {page: 10, limit: 10,  columns: 'title' }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(100)':function(error, pageCount, results, count) {
-      assert.equal(results[9].title, 'Item #100');
+    'the first result should contain the correct index #(100)':function(error, result) {
+      assert.equal(result.paginatedResults[9].title, 'Item #100');
     }
   }
 })
@@ -200,19 +190,19 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 2, 10 results per page with populate and without columns':{
     topic:function(){
-      TestEntry.paginate({}, 2, 10, this.callback, { populate: 'child' });
+      TestEntry.paginate({}, {page: 2, limit: 10,  populate: 'child'}, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results, count) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results, count) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(11)':function(error, pageCount, results, count) {
-      assert.equal(results[0].title, 'Item #11');
+    'the first result should contain the correct index #(11)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #11');
     },
-    'the first result should contain the correct SubItem #(1)':function(error, pageCount, results, count) {
-      assert.equal(results[0].child.title, 'SubItem #1');
+    'the first result should contain the correct SubItem #(1)':function(error, result) {
+      assert.equal(result.paginatedResults[0].child.title, 'SubItem #1');
     }
   }
 })
@@ -220,16 +210,16 @@ vows.describe('pagination module basic tests')
 .addBatch({
   'when paginating TestEntry querying for all documents, with page 1, 10 results per page, sorting reverse by title':{
     topic:function(){
-      TestEntry.paginate({}, 1, 10, this.callback, { sortBy : { title : -1 } });
+      TestEntry.paginate({}, {page: 1, limit: 10, sortBy : { title : -1 } }, this.callback);
     },
-    'there should be no errors':function(error, pageCount, results) {
+    'there should be no errors':function(error, result) {
       assert.equal(error, null);
     },
-    'results.length should be 10':function(error, pageCount, results) {
-      assert.equal(results.length, 10);
+    'results.length should be 10':function(error, result) {
+      assert.equal(result.paginatedResults.length, 10);
     },
-    'the first result should contain the correct index #(99)':function(error, pageCount, results) {
-      assert.equal(results[0].title, 'Item #99');
+    'the first result should contain the correct index #(99)':function(error, result) {
+      assert.equal(result.paginatedResults[0].title, 'Item #99');
     }
   }
 })
@@ -239,9 +229,8 @@ vows.describe('pagination module basic tests')
     topic:function(){
       teardown(this.callback);
     },
-    'there should be no errors and resultCount should be a number':function(error, resultCount) {
+    'there should be no errors and resultCount should be a number':function(error, result) {
       assert.equal(error, null);
-      assert.equal(resultCount, 100);
     }
   }
 })

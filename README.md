@@ -27,12 +27,12 @@ var mongoosePaginate = require('mongoose-paginate');
 
 MyModel.plugin(mongoosePaginate)
 
-MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+MyModel.paginate({}, {page: 2, limit: 10}, function(error, result) {
   if (error) {
     console.error(error);
   } else {
-  	console.log('Pages:', pageCount);
-    console.log(paginatedResults);
+  	console.log('Pages:', result.pageCount);
+    console.log(result.paginatedResults);
   }
 });
 
@@ -52,14 +52,15 @@ var mongoosePaginate = require('mongoose-paginate');
 
 MyModel.plugin(mongoosePaginate)
 
-MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCount) {
+MyModel.paginate({}, {page: 2, limit: 10, columns: 'title', populate: 'some_ref', sortBy : { title : -1 },
+ function(error, result) {
   if (error) {
     console.error(error);
   } else {
-    console.log('Pages:', pageCount);
-    console.log(paginatedResults);
+    console.log('Pages:', result.pageCount);
+    console.log(result.paginatedResults);
   }
-}, { columns: 'title', populate: 'some_ref', sortBy : { title : -1 });
+});
 
 /*
  * Populating more than one ref
@@ -88,7 +89,14 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
 }, { columns: 'title', populate: [{ path: 'some_ref', select: 'field_a field_b' }, 'other_ref' ], sortBy : { title : -1 });
 
 ```
+##### Return object
 
+Returning object looks following:
+```json
+
+{"pageCount": "Number", "paginatedResult": "Number", "itemCount": "Number"}
+
+```
 ## Run Tests
 
 ``` bash
