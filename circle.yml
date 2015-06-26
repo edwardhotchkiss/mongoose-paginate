@@ -1,0 +1,19 @@
+general:
+  branches:
+    only:
+      - master
+machine:
+  timezone: America/New_York
+  node:
+    version:
+      - 0.10
+      - 0.12
+  services:
+    - mongodb
+  environment:
+    CODECLIMATE_REPO_TOKEN: "TODO"
+#test:
+#  override:
+#    - "npm run-script test-circleci"
+#  post:
+#    - "npm install -g codeclimate-test-reporter && cat ./coverage/lcov.info | codeclimate"
