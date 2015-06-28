@@ -11,7 +11,7 @@ machine:
   services:
     - mongodb
   environment:
-    CODECLIMATE_REPO_TOKEN: "TODO"
+    CODECLIMATE_REPO_TOKEN: "d492266813d4843606e969e1bcc8f8c7595bfea71a42d4c24027422cc90f9854"
 #test:
 #  override:
 #    - "npm run-script test-circleci"
