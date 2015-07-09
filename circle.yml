@@ -5,9 +5,7 @@ general:
 machine:
   timezone: America/New_York
   node:
-    version:
-      - "0.10"
-      - "0.12"
+    version: 0.12
   services:
     - mongodb
   environment:
