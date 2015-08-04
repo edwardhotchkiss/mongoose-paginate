@@ -198,6 +198,22 @@ vows.describe('pagination module basic tests')
     }
   })
   .addBatch({
+    'when paginating with lean, response objects should not be models':{
+      topic: function() {
+        TestEntry.paginate({}, { page: 1, limit: 10, lean: true }, this.callback);
+      },
+      'there should be no errs': function(err, results, pageCount, itemCount) {
+        assert.equal(err, null);
+      },
+      'results.length should be 10': function(err, results, pageCount, itemCount) {
+        assert.equal(results.length, 10);
+      },
+      'the first result should not be a model': function(err, results, pageCount, itemCount) {
+        assert.notEqual(results[0].constructor.name, 'model');
+      }
+    }
+  })
+  .addBatch({
     'when deleting all of our 100 dummy documents with our test mongodb string':{
       topic: function() {
         teardown(this.callback);
