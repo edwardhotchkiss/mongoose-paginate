@@ -54,6 +54,7 @@ MySchema.plugin(mongoosePaginate);
   - `columns` - Default: `null`
   - `sortBy` - Default: `null`
   - `populate` - Default: `null`
+  - `lean` - Default: `null`
 * `callback(err, results, pageCount, itemCount)` - A callback which is called once pagination results are retrieved, or when an error has occurred.
 
 **Examples**
@@ -89,7 +90,8 @@ MySchema.paginate(
     populate: 'some_ref',
     sortBy: {
       title: -1
-    }
+    },
+    lean: true
   },
   callback
 );
@@ -107,7 +109,8 @@ MySchema.paginate({}, {
   populate: [ 'some_ref', 'other_ref' ],
   sortBy: {
     title: -1
-  }
+  },
+  lean: true
 }, callback);
 
 ```
@@ -128,7 +131,8 @@ MySchema.paginate({}, {
   ],
   sortBy: {
     title: -1
-  }
+  },
+  lean: true
 }, callback);
 
 ```
