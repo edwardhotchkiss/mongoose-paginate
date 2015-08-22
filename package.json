@@ -47,7 +47,7 @@
     "test": "./node_modules/.bin/vows test/*.test.js --spec --isolate"
   },
   "devDependencies": {
-    "vows": "~0.7.0",
-    "chai": "~3.0.0"
+    "vows": "^0.8.1",
+    "chai": "^3.2.0"
   }
 }
