@@ -1,3 +1,18 @@
+
+v4.0.1 / 2015-08-5
+===================
+
+  * Add to README
+  * add .lean() option
+  * Fixed CircleCI
+  * Added note to readme about breaking changes
+  * Added string for node version in circle.yml
+
+v4.0.0 / 2015-07-06
+===================
+
+  * Unknown
+
 3.1.0 / 2014-06-12
 ==================
 
