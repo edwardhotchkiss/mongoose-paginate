@@ -178,7 +178,7 @@ npm test
 [npm-image]: http://img.shields.io/npm/v/mongoose-paginate.svg?style=flat
 [npm-url]: https://npmjs.org/package/mongoose-paginate
 [npm-downloads]: http://img.shields.io/npm/dm/mongoose-paginate.svg?style=flat
-[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master.svg?style=svg
-[circleci-url]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master
+[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate.svg?style=svg
+[circleci-url]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate
 [slack-url]: http://slack.eskimo.io/
 [slack-image]: http://slack.eskimo.io/badge.svg
