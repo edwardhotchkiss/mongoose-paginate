@@ -31,11 +31,9 @@ npm install -S mongoose-paginate
 This plugin must first be added to a schema:
 
 ```js
-
 var mongoosePaginate = require('mongoose-paginate');
 
 MySchema.plugin(mongoosePaginate);
-
 ```
 
 `MySchema` will have a new function called `paginate` (e.g. `MySchema.paginate()`).
@@ -57,7 +55,6 @@ MySchema.plugin(mongoosePaginate);
 **Examples**
 
 ```js
-
 // basic example usage of `mongoose-pagination`
 // querying for `all` {} items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
@@ -69,11 +66,9 @@ MySchema.plugin(mongoosePaginate);
 MySchema.paginate({}, {
   page: 2, limit: 10
 }, callback);
-
 ```
 
 ```js
-
 // advanced example usage of `mongoose-pagination`
 // querying for `{ columns: 'title', { populate: 'some_ref' }, { sortBy : { title : -1 } }` items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
@@ -92,11 +87,9 @@ MySchema.paginate(
   },
   callback
 );
-
 ```
 
 ```js
-
 // populating more than one ref
 
 MySchema.paginate({}, {
@@ -109,11 +102,9 @@ MySchema.paginate({}, {
   },
   lean: true
 }, callback);
-
 ```
 
 ```js
-
 // selecting specific field for population
 // <http://mongoosejs.com/docs/api.html#query_Query-populate>
 
@@ -131,16 +122,13 @@ MySchema.paginate({}, {
   },
   lean: true
 }, callback);
-
 ```
-
 
 ## Tests
 
 ```bash
 npm test
 ```
-
 
 ## Contributors
 
@@ -161,11 +149,9 @@ npm test
 * charles bourasseau <charles.bourasseau@gmail.com>
 * giulianoiacobelli <giuliano.iacobelli@gmail.com>
 
-
 ## License
 
 [MIT][license-url]
-
 
 [mongoose]: http://mongoosejs.com
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
