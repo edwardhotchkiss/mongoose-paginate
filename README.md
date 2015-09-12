@@ -6,7 +6,6 @@
 [![Circle CI][circleci-image]][circleci-url]
 [![Static Analysis][codeclimate-image]][codeclimate-url]
 [![MIT License][license-image]][license-url]
-[![Slack][slack-image]][slack-url]
 
 > `mongoose-paginate` is a plugin for [Mongoose][mongoose] schemas to easily add paginated queries and results.  This plugin is to be used in combination with view pagination middleware such as [express-paginate](https://github.com/niftylettuce/express-paginate).
 
@@ -178,7 +177,5 @@ npm test
 [npm-image]: http://img.shields.io/npm/v/mongoose-paginate.svg?style=flat
 [npm-url]: https://npmjs.org/package/mongoose-paginate
 [npm-downloads]: http://img.shields.io/npm/dm/mongoose-paginate.svg?style=flat
-[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master.svg?style=svg
+[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master.svg?style=shield
 [circleci-url]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master
-[slack-url]: http://slack.eskimo.io/
-[slack-image]: http://slack.eskimo.io/badge.svg
