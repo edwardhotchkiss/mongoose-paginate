@@ -6,13 +6,10 @@
 [![Circle CI][circleci-image]][circleci-url]
 [![Static Analysis][codeclimate-image]][codeclimate-url]
 [![MIT License][license-image]][license-url]
-[![Slack][slack-image]][slack-url]
 
 > `mongoose-paginate` is a plugin for [Mongoose][mongoose] schemas to easily add paginated queries and results.  This plugin is to be used in combination with view pagination middleware such as [express-paginate](https://github.com/niftylettuce/express-paginate).
 
----
 *NOTICE*: Versions > `3.1.4` are deprecated and unpublished from NPM due to a bad commit.  Please use version `3.1.3` for no breaking changes or upgrade to the latest stable `4.0.0` release (see below documentation).
----
 
 ## Index
 
@@ -34,11 +31,9 @@ npm install -S mongoose-paginate
 This plugin must first be added to a schema:
 
 ```js
-
 var mongoosePaginate = require('mongoose-paginate');
 
 MySchema.plugin(mongoosePaginate);
-
 ```
 
 `MySchema` will have a new function called `paginate` (e.g. `MySchema.paginate()`).
@@ -60,7 +55,6 @@ MySchema.plugin(mongoosePaginate);
 **Examples**
 
 ```js
-
 // basic example usage of `mongoose-pagination`
 // querying for `all` {} items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
@@ -72,11 +66,9 @@ MySchema.plugin(mongoosePaginate);
 MySchema.paginate({}, {
   page: 2, limit: 10
 }, callback);
-
 ```
 
 ```js
-
 // advanced example usage of `mongoose-pagination`
 // querying for `{ columns: 'title', { populate: 'some_ref' }, { sortBy : { title : -1 } }` items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
@@ -95,11 +87,9 @@ MySchema.paginate(
   },
   callback
 );
-
 ```
 
 ```js
-
 // populating more than one ref
 
 MySchema.paginate({}, {
@@ -112,11 +102,9 @@ MySchema.paginate({}, {
   },
   lean: true
 }, callback);
-
 ```
 
 ```js
-
 // selecting specific field for population
 // <http://mongoosejs.com/docs/api.html#query_Query-populate>
 
@@ -134,16 +122,13 @@ MySchema.paginate({}, {
   },
   lean: true
 }, callback);
-
 ```
-
 
 ## Tests
 
 ```bash
 npm test
 ```
-
 
 ## Contributors
 
@@ -164,11 +149,9 @@ npm test
 * charles bourasseau <charles.bourasseau@gmail.com>
 * giulianoiacobelli <giuliano.iacobelli@gmail.com>
 
-
 ## License
 
 [MIT][license-url]
-
 
 [mongoose]: http://mongoosejs.com
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
@@ -178,7 +161,5 @@ npm test
 [npm-image]: http://img.shields.io/npm/v/mongoose-paginate.svg?style=flat
 [npm-url]: https://npmjs.org/package/mongoose-paginate
 [npm-downloads]: http://img.shields.io/npm/dm/mongoose-paginate.svg?style=flat
-[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate.svg?style=svg
-[circleci-url]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate
-[slack-url]: http://slack.eskimo.io/
-[slack-image]: http://slack.eskimo.io/badge.svg
+[circleci-image]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master.svg?style=shield
+[circleci-url]: https://circleci.com/gh/edwardhotchkiss/mongoose-paginate/tree/master
