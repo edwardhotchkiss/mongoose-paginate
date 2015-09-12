@@ -9,9 +9,7 @@
 
 > `mongoose-paginate` is a plugin for [Mongoose][mongoose] schemas to easily add paginated queries and results.  This plugin is to be used in combination with view pagination middleware such as [express-paginate](https://github.com/niftylettuce/express-paginate).
 
----
 *NOTICE*: Versions > `3.1.4` are deprecated and unpublished from NPM due to a bad commit.  Please use version `3.1.3` for no breaking changes or upgrade to the latest stable `4.0.0` release (see below documentation).
----
 
 ## Index
 
