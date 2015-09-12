@@ -1,4 +1,30 @@
 
+v4.2.0 / 2015-09-12
+==================
+
+  * [minor, whitespace]
+  * Merge branch 'tsm91-master'
+  * [merge] conflicts resolved, derp
+  * Merge pull request #58 from edwardhotchkiss/develop
+  * [merge, docs] readme merged and edited
+  * [circleci, tests] just master
+  * [minor, docs] less intense deprecation message
+  * Merge branch 'develop' of github.com:edwardhotchkiss/mongoose-paginate into develop
+  * [test, circleci] branches => add develop
+  * Merge pull request #57 from edwardhotchkiss/feature/cleanup
+  * [docs, license] => .md, remove slack, fix circleci build image
+  * [circleci, tests] removed commented out shit
+  * [minor, whitespace] removed trailing line
+  * allow chaining
+  * Update README.md
+  * update readme
+  * implement alternate promise return
+  * update dependecies
+  * [test, deps] update vows and chai
+  * [package, deps] updated async and mongoose to latest, see issue #50
+  * [minor, license] use @niftylettuce real name for copyright
+  * [docs, changelog] updated partially to reflect commits w/ tags
+
 v4.0.1 / 2015-08-5
 ===================
 

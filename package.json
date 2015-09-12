@@ -2,7 +2,7 @@
   "author": "Edward Hotchkiss <edward@edwardhotchkiss.com>",
   "name": "mongoose-paginate",
   "description": "Plugin for Mongoose schemas to easily add paginated queries and results",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "contributors": [
     {
       "name": "Edward Hotchkiss",
