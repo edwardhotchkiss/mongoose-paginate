@@ -1,7 +1,6 @@
 general:
   branches:
     - master
-    - develop
 machine:
   timezone: America/New_York
   node:
