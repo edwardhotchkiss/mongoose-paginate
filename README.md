@@ -38,7 +38,7 @@ MySchema.plugin(mongoosePaginate);
 
 `MySchema` will have a new function called `paginate` (e.g. `MySchema.paginate()`).
 
-### MySchema.paginate(query, options, callback)
+### MySchema.paginate(query, options, [callback])
 
 **Arguments**
 
@@ -50,7 +50,7 @@ MySchema.plugin(mongoosePaginate);
   - `sortBy` - Default: `null`
   - `populate` - Default: `null`
   - `lean` - Default: `null`
-* `callback(err, results, pageCount, itemCount)` - A callback which is called once pagination results are retrieved, or when an error has occurred.
+* `callback(err, results, pageCount, itemCount)` - If specified the callback is called once pagination results are retrieved, or when an error has occurred. Otherwise will return a promise.
 
 **Examples**
 
@@ -66,6 +66,28 @@ MySchema.plugin(mongoosePaginate);
 MySchema.paginate({}, {
   page: 2, limit: 10
 }, callback);
+```
+
+```js
+// basic example usage of `mongoose-pagination` with promises
+// querying for `all` {} items in `MySchema`
+// paginating by second page, 10 items per page (10 results, page 2)
+
+var mongoose = require('mongoose'); // required mongoose v4.1.0 or higher
+mongoose.Promise = require('bluebird');
+var mongoosePaginate = require('mongoose-paginate');
+
+MySchema.plugin(mongoosePaginate);
+
+MySchema.paginate({}, {
+  page: 2, limit: 10
+})
+  .spread(function(questions, pageCount, itemCount) {
+    ...
+  })
+  .catch(function(err) {
+    return next(err);
+  });
 ```
 
 ```js
