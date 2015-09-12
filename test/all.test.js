@@ -69,7 +69,6 @@ vows.describe('pagination module basic tests')
       }
     }
   })
-
   .addBatch({
     'teardown the collections before running tests':{
       topic: function() {
