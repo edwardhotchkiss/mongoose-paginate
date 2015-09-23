@@ -97,7 +97,7 @@ MyModel.paginate({}, {
 
 ```js
 // advanced example usage of `mongoose-pagination`
-// querying for `{ columns: 'title', { populate: 'some_ref' }, { sort : { title : -1 } }` items in `MySchema`
+// querying for `{ columns: 'title', { populate: 'some_ref' }, { sort : { title : -1 } }` items in `MyModel`
 // paginating by second page, 10 items per page (10 results, page 2)
 
 MyModel.paginate(
