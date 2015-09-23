@@ -178,7 +178,7 @@ vows.describe('pagination module basic tests')
           {
             page: 1,
             limit: 10,
-            sortBy: {
+            sort: {
               title: -1
             }
           },
