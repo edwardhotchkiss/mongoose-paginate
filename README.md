@@ -49,7 +49,7 @@ MySchema.plugin(mongoosePaginate);
   - `columns` - Default: `null`
   - `sortBy` - Default: `null`
   - `populate` - Default: `null`
-  - `lean` - Default: `null`
+  - `lean` - Default: `false`
 * `callback(err, results, pageCount, itemCount)` - If specified the callback is called once pagination results are retrieved, or when an error has occurred. Otherwise will return a promise.
 
 **Examples**
