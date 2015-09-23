@@ -31,14 +31,19 @@ npm install -S mongoose-paginate
 This plugin must first be added to a schema:
 
 ```js
+var mongoose         = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
-MySchema.plugin(mongoosePaginate);
+var mySchema = new mongoose.Schema({ /**/ });
+
+mySchema.plugin(mongoosePaginate);
+
+var MyModel = mongoose.model('MyModel',  mySchema);
 ```
 
-`MySchema` will have a new function called `paginate` (e.g. `MySchema.paginate()`).
+`MyModel` will have a new function called `paginate` (e.g. `MyModel.paginate()`).
 
-### MySchema.paginate(query, options, [callback])
+### MyModel.paginate(query, options, [callback])
 
 **Arguments**
 
@@ -49,37 +54,37 @@ MySchema.plugin(mongoosePaginate);
   - `columns` - Default: `null`
   - `sort` - Default: `null`
   - `populate` - Default: `null`
-  - `lean` - Default: `null`
+  - `lean` - Default: `false`
 * `callback(err, results, pageCount, itemCount)` - If specified the callback is called once pagination results are retrieved, or when an error has occurred. Otherwise will return a promise.
 
 **Examples**
 
 ```js
 // basic example usage of `mongoose-pagination`
-// querying for `all` {} items in `MySchema`
+// querying for `all` {} items in `MyModel`
 // paginating by second page, 10 items per page (10 results, page 2)
 
 var mongoosePaginate = require('mongoose-paginate');
 
-MySchema.plugin(mongoosePaginate);
+mySchema.plugin(mongoosePaginate);
 
-MySchema.paginate({}, {
+MyModel.paginate({}, {
   page: 2, limit: 10
 }, callback);
 ```
 
 ```js
 // basic example usage of `mongoose-pagination` with promises
-// querying for `all` {} items in `MySchema`
+// querying for `all` {} items in `MyModel`
 // paginating by second page, 10 items per page (10 results, page 2)
 
 var mongoose = require('mongoose'); // required mongoose v4.1.0 or higher
 mongoose.Promise = require('bluebird');
 var mongoosePaginate = require('mongoose-paginate');
 
-MySchema.plugin(mongoosePaginate);
+mySchema.plugin(mongoosePaginate);
 
-MySchema.paginate({}, {
+MyModel.paginate({}, {
   page: 2, limit: 10
 })
   .spread(function(questions, pageCount, itemCount) {
@@ -95,7 +100,7 @@ MySchema.paginate({}, {
 // querying for `{ columns: 'title', { populate: 'some_ref' }, { sort : { title : -1 } }` items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
 
-MySchema.paginate(
+MyModel.paginate(
   {},
   {
     page: 2,
@@ -114,7 +119,7 @@ MySchema.paginate(
 ```js
 // populating more than one ref
 
-MySchema.paginate({}, {
+MyModel.paginate({}, {
   page: 2,
   limit: 10,
   columns: 'title',
@@ -130,7 +135,7 @@ MySchema.paginate({}, {
 // selecting specific field for population
 // <http://mongoosejs.com/docs/api.html#query_Query-populate>
 
-MySchema.paginate({}, {
+MyModel.paginate({}, {
   columns: 'title',
   populate: [
     {
