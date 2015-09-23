@@ -52,7 +52,7 @@ var MyModel = mongoose.model('MyModel',  mySchema);
   - `page` - Default: `1`
   - `limit` - Default: `10`
   - `columns` - Default: `null`
-  - `sortBy` - Default: `null`
+  - `sort` - Default: `null`
   - `populate` - Default: `null`
   - `lean` - Default: `false`
 * `callback(err, results, pageCount, itemCount)` - If specified the callback is called once pagination results are retrieved, or when an error has occurred. Otherwise will return a promise.
@@ -97,7 +97,7 @@ MyModel.paginate({}, {
 
 ```js
 // advanced example usage of `mongoose-pagination`
-// querying for `{ columns: 'title', { populate: 'some_ref' }, { sortBy : { title : -1 } }` items in `MyModel`
+// querying for `{ columns: 'title', { populate: 'some_ref' }, { sort : { title : -1 } }` items in `MySchema`
 // paginating by second page, 10 items per page (10 results, page 2)
 
 MyModel.paginate(
@@ -107,7 +107,7 @@ MyModel.paginate(
     limit: 10,
     columns: 'title',
     populate: 'some_ref',
-    sortBy: {
+    sort: {
       title: -1
     },
     lean: true
@@ -124,7 +124,7 @@ MyModel.paginate({}, {
   limit: 10,
   columns: 'title',
   populate: [ 'some_ref', 'other_ref' ],
-  sortBy: {
+  sort: {
     title: -1
   },
   lean: true
@@ -144,7 +144,7 @@ MyModel.paginate({}, {
     },
     'other_ref'
   ],
-  sortBy: {
+  sort: {
     title: -1
   },
   lean: true
