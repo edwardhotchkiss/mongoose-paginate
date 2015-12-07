@@ -1,4 +1,18 @@
+v5.0.0 / 2015-12-07
+==================
 
+  * Support only Node.js >= 4.0
+  * Support only Mongoose >= 4.0
+  * Same resulting object for promise and callback
+  * Renamed columns -> select (like in Mongoose)
+  * Renamed sortBy -> sort (like in Mongoose)
+  * Added offset option
+  * Added leanWithId option
+  * Zero limit to get only metadata
+  * Custom default options
+  * Mocha tests
+  * Travis CI
+  
 v4.2.0 / 2015-09-12
 ==================
 
@@ -161,3 +175,4 @@ v4.0.1 / 2015-08-5
   * [node] bump engine req to 0.6.11
   * [deps] bump mongoose to 2.5.13
   * [deps] bump vows to 0.6.2
+ 

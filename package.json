@@ -1,54 +1,58 @@
 {
-  "author": "Edward Hotchkiss <edward@edwardhotchkiss.com>",
-  "name": "mongoose-paginate",
-  "description": "Plugin for Mongoose schemas to easily add paginated queries and results",
-  "version": "4.2.0",
-  "contributors": [
-    {
-      "name": "Edward Hotchkiss",
-      "email": "edward@edwardhotchkiss.com"
+    "name":        "mongoose-paginate",
+    "description": "Pagination plugin for Mongoose",
+    "version":     "5.0.0",
+
+    "author": {
+        "name":  "Edward Hotchkiss",
+        "email": "edward@edwardhotchkiss.com"
     },
-    {
-      "name": "Nick Baugh",
-      "email": "niftylettuce@gmail.com"
+    "contributors": [
+        {
+            "name":  "Edward Hotchkiss",
+            "email": "edward@edwardhotchkiss.com"
+        },
+        {
+            "name":  "Nick Baugh",
+            "email": "niftylettuce@gmail.com"
+        },
+        {
+            "name":  "Dmitry Kirilyuk",
+            "email": "gk.joker@gmail.com"
+        }
+    ],
+
+    "repository": {
+        "type": "git",
+        "url":  "https://github.com/edwardhotchkiss/mongoose-paginate.git"
+    },
+
+    "license": "MIT",
+
+    "keywords": [
+        "mongoose",
+        "paginate",
+        "pagination",
+        "paging",
+        "page"
+    ],
+
+    "engines": {
+        "node": ">=4.0.0"
+    },
+
+    "dependencies": {
+        "bluebird": "3.0.5"
+    },
+
+    "devDependencies": {
+        "mongoose":         "4.2.8",
+        "mocha":            "2.3.4",
+        "chai":             "3.4.1",
+        "chai-as-promised": "5.1.0"
+    },
+
+    "scripts": {
+        "test": "./node_modules/.bin/mocha tests/*.js --timeout 5000"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/edwardhotchkiss/mongoose-paginate.git"
-  },
-  "bugs": {
-    "url": "https://github.com/edwardhotchkiss/mongoose-paginate/issues"
-  },
-  "homepage": "http://github.com/edwardhotchkiss/mongoose-paginate/",
-  "keywords": [
-    "mongoose",
-    "paginate",
-    "sort",
-    "results",
-    "page",
-    "populate"
-  ],
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "dependencies": {
-    "async": "~1.4.2",
-    "bluebird": "~2.9.34",
-    "mongoose": "~4.1.3"
-  },
-  "main": "./lib/mongoose-paginate",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/edwardhotchkiss/mongoose-paginate/LICENSE"
-    }
-  ],
-  "scripts": {
-    "test": "./node_modules/.bin/vows test/*.test.js --spec --isolate"
-  },
-  "devDependencies": {
-    "vows": "^0.8.1",
-    "chai": "^3.2.0"
-  }
 }
