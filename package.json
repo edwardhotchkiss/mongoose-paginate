@@ -46,10 +46,9 @@
     },
 
     "devDependencies": {
-        "mongoose":         "4.2.8",
-        "mocha":            "2.3.4",
-        "chai":             "3.4.1",
-        "chai-as-promised": "5.1.0"
+        "mongoose": "4.2.8",
+        "mocha":    "2.3.4",
+        "chai":     "3.4.1"
     },
 
     "scripts": {

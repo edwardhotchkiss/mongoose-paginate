@@ -46,20 +46,20 @@ function paginate(query, options, callback) {
     };
 
     if (limit) {
-        var query = this.find(query)
-                        .select(select)
-                        .sort(sort)
-                        .skip(skip)
-                        .limit(limit)
-                        .lean(lean);
+        var docsQuery = this.find(query)
+                            .select(select)
+                            .sort(sort)
+                            .skip(skip)
+                            .limit(limit)
+                            .lean(lean);
 
         if (populate) {
             [].concat(populate).forEach(function(item) {
-                query.populate(item);
+                docsQuery.populate(item);
             });
         }
 
-        promises.docs = query.exec();
+        promises.docs = docsQuery.exec();
 
         if (lean && leanWithId) {
             promises.docs = promises.docs.then(function(docs) {

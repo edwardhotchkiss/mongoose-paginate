@@ -1,11 +1,7 @@
 var mongoosePaginate = require('../index');
 var mongoose         = require('mongoose');
+var expect           = require('chai').expect;
 
-var chai           = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var expect         = require('chai').expect;
-
-chai.use(chaiAsPromised);
 
 const MONGO_URI = 'mongodb://127.0.0.1/mongoose_paginate_test';
 
@@ -54,6 +50,10 @@ describe('mongoose-paginate', function() {
         });
     });
 
+    afterEach(function() {
+        delete mongoosePaginate.paginate.options;
+    });
+
     it('returns promise', function() {
         var promise = Book.paginate();
         expect(promise.then).to.be.an.instanceof(Function);
@@ -98,9 +98,7 @@ describe('mongoose-paginate', function() {
                 expect(result.docs).to.have.length(20);
                 expect(result.limit).to.equal(20);
                 expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
-
-                delete mongoosePaginate.paginate.options;
-            })
+            });
         });
 
         it('with offset and limit', function() {

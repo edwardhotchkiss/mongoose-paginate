@@ -29,8 +29,6 @@ var Model = mongoose.model('Model',  schema); // Model.paginate()
 
 ### Model.paginate([query], [options], [callback])
 
-Returns promise
-
 **Parameters**
 
 * `[query]` {Object} - Query criteria. [Documentation](https://docs.mongodb.org/manual/tutorial/query-documents)
