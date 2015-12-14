@@ -6,3 +6,5 @@ node_js:
 
 services:
   - mongodb
+
+sudo: false
