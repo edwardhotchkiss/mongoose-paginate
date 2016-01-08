@@ -33,13 +33,13 @@
     "page"
   ],
   "engines": {
-    "node": ">=4.2.4"
+    "node": ">=4.2"
   },
   "dependencies": {},
   "devDependencies": {
-    "mongoose": "4.3.4",
-    "mocha": "2.3.4",
-    "chai": "3.4.1"
+    "mongoose": ">=4.2",
+    "mocha": "~2.3.4",
+    "chai": "~3.4.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha tests/*.js -R spec --ui bdd --timeout 5000"
