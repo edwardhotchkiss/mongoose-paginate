@@ -79,9 +79,9 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
+    return this.resolve(result);
+  }).catch((error) => {
+    return callback(error);
   });
 }
 
