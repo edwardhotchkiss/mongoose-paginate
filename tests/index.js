@@ -68,8 +68,6 @@ describe('mongoose-paginate', function() {
   describe('paginates', function() {
     it('with criteria', function() {
       return Book.paginate({ title: 'Book #10' }).then((result) => {
-        console.log('with criteria logging ==================');
-        console.log('result:', result);
         expect(result.docs).to.have.length(1);
         expect(result.docs[0].title).to.equal('Book #10');
       });
