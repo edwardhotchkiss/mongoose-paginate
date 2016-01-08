@@ -79,7 +79,7 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    return this.resolve(result);
+    return Promise.resolve(result);
   }).catch((error) => {
     return callback(error);
   });
