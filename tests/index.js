@@ -47,18 +47,14 @@ describe('mongoose-paginate', () => {
     });
   });
 
-  afterEach(() => {
-    delete mongoosePaginate.paginate.options;
-  });
-
   it('returns promise', () => {
     let promise = Book.paginate();
     expect(promise.then).to.be.an.instanceof(Function);
   });
 
   it('calls callback', (done) => {
-    Book.paginate({}, {}, (err, result) => {
-      expect(err).to.be.null;
+    Book.paginate({}, {}, (error, result) => {
+      expect(error).to.be.null;
       expect(result).to.be.an.instanceOf(Object);
       done();
     }, (error) => {
@@ -75,7 +71,7 @@ describe('mongoose-paginate', () => {
         expect(error).to.be.undefined;
       });
     });
-    /*it('with default options (page=1, limit=10, lean=false)', () => {
+    it('with default options (page=1, limit=10, lean=false)', () => {
       return Book.paginate().then((result) => {
         expect(result.docs[0]).to.have.length(10);
         expect(result.docs[0]).to.be.an.instanceof(mongoose.Document);
@@ -87,13 +83,9 @@ describe('mongoose-paginate', () => {
       }, (error) => {
         expect(error).to.be.undefined;
       });
-    });*/
+    });
     it('with custom default options', () => {
-      mongoosePaginate.paginate.options = {
-        limit: 20,
-        lean: true
-      };
-      return Book.paginate().then((result) => {
+      return Book.paginate({}, { limit: 20, lean: true }).then((result) => {
         expect(result.docs).to.have.length(20);
         expect(result.limit).to.equal(20);
         expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
@@ -101,7 +93,7 @@ describe('mongoose-paginate', () => {
         expect(error).to.be.undefined;
       });
     });
-    /*it('with offset and limit', () => {
+    it('with offset and limit', () => {
       return Book.paginate({}, { offset: 30, limit: 20 }).then((result) => {
         expect(result.docs).to.have.length(20);
         expect(result.total).to.equal(100);
@@ -112,8 +104,8 @@ describe('mongoose-paginate', () => {
       }, (error) => {
         expect(error).to.be.undefined;
       });
-    });*/
-    /*it('with page and limit', () => {
+    });
+    it('with page and limit', () => {
       return Book.paginate({}, { page: 1, limit: 20 }).then((result) => {
         expect(result.docs).to.have.length(20);
         expect(result.total).to.equal(100);
@@ -124,8 +116,8 @@ describe('mongoose-paginate', () => {
       }, (error) => {
         expect(error).to.be.undefined;
       });
-    });*/
-    /*it('with zero limit', () => {
+    });
+    it('with zero limit', () => {
       return Book.paginate({}, { page: 1, limit: 0 }).then((result) => {
         expect(result.docs).to.have.length(0);
         expect(result.total).to.equal(100);
@@ -135,7 +127,7 @@ describe('mongoose-paginate', () => {
       }, (error) => {
         expect(error).to.be.undefined;
       });
-    });*/
+    });
     it('with select', () => {
       return Book.paginate({}, { select: 'title' }).then((result) => {
         expect(result.docs[0].title).to.exist;
@@ -160,21 +152,25 @@ describe('mongoose-paginate', () => {
     });
     describe('with lean', () => {
       it('with default leanWithId=true', () => {
-        return Book.paginate({}, { lean: true }).then((result) => {
+        return Book.paginate({}, {
+          lean: true, leanWithId: true
+        }).then((result) => {
           expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
           expect(result.docs[0].id).to.equal(String(result.docs[0]._id));
         }, (error) => {
           expect(error).to.be.undefined;
         });
       });
-      /*it('with leanWithId=false', () => {
-        return Book.paginate({}, { lean: true, leanWithId: false }).then((result) => {
+      it('without leanWithId', () => {
+        return Book.paginate({}, { 
+          lean: true
+        }).then((result) => {
           expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
           expect(result.docs[0]).to.not.have.property('id');
         }, (error) => {
           expect(error).to.be.undefined;
         });
-      });*/
+      });
     });
   });
 
