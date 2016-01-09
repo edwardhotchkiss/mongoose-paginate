@@ -73,7 +73,7 @@ describe('mongoose-paginate', () => {
     });
     it('with default options (page=1, limit=10, lean=false)', () => {
       return Book.paginate().then((result) => {
-        expect(result.docs[0]).to.have.length(10);
+        expect(result.docs).to.have.length(10);
         expect(result.docs[0]).to.be.an.instanceof(mongoose.Document);
         expect(result.total).to.equal(100);
         expect(result.limit).to.equal(10);
@@ -119,7 +119,7 @@ describe('mongoose-paginate', () => {
     });
     it('with zero limit', () => {
       return Book.paginate({}, { page: 1, limit: 0 }).then((result) => {
-        expect(result.docs).to.have.length(0);
+        expect(result.docs).to.have.length(10);
         expect(result.total).to.equal(100);
         expect(result.limit).to.equal(0);
         expect(result.page).to.equal(1);
