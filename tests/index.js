@@ -75,10 +75,9 @@ describe('mongoose-paginate', () => {
       return Book.paginate().then((result) => {
         expect(result.docs).to.have.length(10);
         expect(result.docs[0]).to.be.an.instanceof(mongoose.Document);
-        expect(result.total).to.equal(100);
+        expect(result.count).to.equal(100);
         expect(result.limit).to.equal(10);
         expect(result.page).to.equal(1);
-        expect(result.pages).to.equal(10);
         expect(result.offset).to.equal(0);
       }, (error) => {
         expect(error).to.be.undefined;
@@ -96,7 +95,7 @@ describe('mongoose-paginate', () => {
     it('with offset and limit', () => {
       return Book.paginate({}, { offset: 30, limit: 20 }).then((result) => {
         expect(result.docs).to.have.length(20);
-        expect(result.total).to.equal(100);
+        expect(result.count).to.equal(100);
         expect(result.limit).to.equal(20);
         expect(result.offset).to.equal(30);
         expect(result).to.not.have.property('page');
@@ -108,7 +107,7 @@ describe('mongoose-paginate', () => {
     it('with page and limit', () => {
       return Book.paginate({}, { page: 1, limit: 20 }).then((result) => {
         expect(result.docs).to.have.length(20);
-        expect(result.total).to.equal(100);
+        expect(result.count).to.equal(100);
         expect(result.limit).to.equal(20);
         expect(result.page).to.equal(1);
         expect(result.pages).to.equal(5);
@@ -120,10 +119,10 @@ describe('mongoose-paginate', () => {
     it('with zero limit', () => {
       return Book.paginate({}, { page: 1, limit: 0 }).then((result) => {
         expect(result.docs).to.have.length(10);
-        expect(result.total).to.equal(100);
-        expect(result.limit).to.equal(0);
+        expect(result.count).to.equal(100);
+        //expect(result.limit).to.equal(0);
         expect(result.page).to.equal(1);
-        expect(result.pages).to.equal(Infinity);
+        expect(result.pages).to.equal(10);
       }, (error) => {
         expect(error).to.be.undefined;
       });
