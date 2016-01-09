@@ -19,7 +19,6 @@ let BookSchema = new mongoose.Schema({
 });
 
 BookSchema.plugin(mongoosePaginate);
-
 let Book = mongoose.model('Book', BookSchema);
 
 describe('mongoose-paginate', function() {
@@ -70,6 +69,8 @@ describe('mongoose-paginate', function() {
       return Book.paginate({ title: 'Book #10' }).then((result) => {
         expect(result.docs).to.have.length(1);
         expect(result.docs[0].title).to.equal('Book #10');
+      }, (error) => {
+        expect(error).to.be.undefined;
       });
     });
     it('with default options (page=1, limit=10, lean=false)', function() {

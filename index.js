@@ -1,5 +1,7 @@
 'use strict';
 
+const mongoose = require('mongoose');
+
 /**
  * @package mongoose-paginate
  * @param {Object} [query={}]
@@ -49,9 +51,10 @@ function paginate(query, options, callback) {
         docsQuery.populate(item);
       });
     }
+    let countQuery = this.count(query);
     promises = {
       docs: docsQuery.exec(),
-      count: this.count(query).exec()
+      count: countQuery.exec()
     };
     if (lean && leanWithId) {
       promises.docs = promises.docs.then((docs) => {
@@ -63,31 +66,40 @@ function paginate(query, options, callback) {
     }
   }
   promises = Object.keys(promises).map((x) => promises[x]);
-  return Promise.all(promises).then((data) => {
-    let result = {
-      docs: data.docs,
-      total: data.count,
-      limit: limit
-    };
-    if (offset !== undefined) {
-      result.offset = offset;
-    }
-    if (page !== undefined) {
-      result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
-    }
-    if (typeof callback === 'function') {
-      return callback(null, result);
-    }
-    return Promise.resolve(result);
-  }).catch((error) => {
-    return callback(error);
+  let promise = new Promise((resolve, reject) => {
+    Promise.all(promises).then((data) => {
+      let result = {
+        docs: data[0],
+        total: data.total,
+        limit: limit
+      };
+      if (offset !== undefined) {
+        result.offset = offset;
+      }
+      if (page !== undefined) {
+        result.page = page;
+        result.pages = Math.ceil(data.count / limit) || 1;
+      }
+      if (typeof callback === 'function') {
+        return callback(null, result);
+      }
+      resolve(result);
+    }, (error) => {
+      if (typeof callback === 'function') {
+        return callback(error, null);
+      }
+      reject(error);
+    });
   });
+  return promise;
 }
 
 /**
  * @param {Schema} schema
+ * use native ES6 promises verus mpromise
  */
+
+mongoose.Promise = global.Promise;
 
 module.exports = function(schema) {
   schema.statics.paginate = paginate;
