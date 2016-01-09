@@ -51,19 +51,24 @@ function paginate(query, options, callback) {
         docsQuery.populate(item);
       });
     }
-    let countQuery = this.count(query);
     promises = {
-      docs: docsQuery.exec(),
-      count: countQuery.exec()
-    };
-    if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
-        docs.forEach((doc) => {
-          doc.id = String(doc._id);
+      docs: new Promise((resolve, reject) => {
+        docsQuery.exec((error, results) => {
+          if (error) {
+            return reject(error);
+          }
+          return resolve(results);
         });
-        return docs;
-      });
-    }
+      }),
+      count: new Promise((resolve, reject) => {
+        this.count(query).exec((error, results) => {
+          if (error) {
+            return reject(error);
+          }
+          return resolve(results);
+        });
+      })
+    };
   }
   promises = Object.keys(promises).map((x) => promises[x]);
   let promise = new Promise((resolve, reject) => {
@@ -73,6 +78,12 @@ function paginate(query, options, callback) {
         total: data.total,
         limit: limit
       };
+      if (lean && leanWithId) {
+        result.docs = result.docs.map((doc) => {
+          doc.id = String(doc._id);
+          return doc;
+        });
+      }
       if (offset !== undefined) {
         result.offset = offset;
       }
