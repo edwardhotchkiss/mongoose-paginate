@@ -3,7 +3,7 @@
 let mongoose = require('mongoose');
 let expect = require('chai').expect;
 let mongoosePaginate = require('../index');
-mongoose.set('debug', true);
+
 let MONGO_URI = 'mongodb://127.0.0.1/mongoose_paginate_test';
 
 let AuthorSchema = new mongoose.Schema({ name: String });
