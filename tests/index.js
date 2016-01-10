@@ -3,7 +3,7 @@
 let mongoose = require('mongoose');
 let expect = require('chai').expect;
 let mongoosePaginate = require('../index');
-
+mongoose.set('debug', true);
 let MONGO_URI = 'mongodb://127.0.0.1/mongoose_paginate_test';
 
 let AuthorSchema = new mongoose.Schema({ name: String });
@@ -84,10 +84,15 @@ describe('mongoose-paginate', () => {
       });
     });
     it('with custom default options', () => {
-      return Book.paginate({}, { limit: 20, lean: true }).then((result) => {
+      mongoosePaginate.paginate.options = {
+        limit: 20,
+        lean: true
+      };
+      return Book.paginate().then((result) => {
         expect(result.docs).to.have.length(20);
         expect(result.limit).to.equal(20);
         expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
+        delete mongoosePaginate.paginate.options;
       }, (error) => {
         expect(error).to.be.undefined;
       });
@@ -118,13 +123,11 @@ describe('mongoose-paginate', () => {
     });
     it('with zero limit', () => {
       return Book.paginate({}, { page: 1, limit: 0 }).then((result) => {
-        expect(result.docs).to.have.length(10);
-        expect(result.count).to.equal(100);
-        //expect(result.limit).to.equal(0);
+        expect(result.docs).to.have.length(0);
+        expect(result.total).to.equal(100);
+        expect(result.limit).to.equal(0);
         expect(result.page).to.equal(1);
-        expect(result.pages).to.equal(10);
-      }, (error) => {
-        expect(error).to.be.undefined;
+        expect(result.pages).to.equal(Infinity);
       });
     });
     it('with select', () => {
@@ -151,21 +154,19 @@ describe('mongoose-paginate', () => {
     });
     describe('with lean', () => {
       it('with default leanWithId=true', () => {
-        return Book.paginate({}, {
-          lean: true, leanWithId: true
-        }).then((result) => {
+        return Book.paginate({}, { lean: true, leanWithId: true }).then((result) => {
           expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
           expect(result.docs[0].id).to.equal(String(result.docs[0]._id));
         }, (error) => {
           expect(error).to.be.undefined;
         });
       });
-      it('without leanWithId', () => {
+      it('with lean without leanWithId', () => {
         return Book.paginate({}, { 
           lean: true
         }).then((result) => {
-          expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
-          expect(result.docs[0]).to.not.have.property('id');
+          expect(result.docs).to.not.be.an.instanceof(mongoose.Document);
+          expect(result.docs).to.not.have.property('id');
         }, (error) => {
           expect(error).to.be.undefined;
         });

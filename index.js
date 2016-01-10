@@ -20,13 +20,13 @@ const mongoose = require('mongoose');
 
 function paginate(query, options, callback) {
   query = query || {};
-  options = options || {};
-  let select = options.select || null;
+  options = Object.assign({}, paginate.options, options);
+  let select = options.select;
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
-  let leanWithId = options.leanWithId || false;
-  let limit = options.limit || 10;
+  let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
+  let limit = options.hasOwnProperty('limit') ? options.limit : 10;
   let page, offset, skip, promises;
   if (options.offset) {
     offset = options.offset;
@@ -75,7 +75,7 @@ function paginate(query, options, callback) {
         result.offset = offset;
       }
       if (page !== undefined) {
-        result.page = page; 
+        result.page = page;
         result.pages = Math.ceil(result.count / limit) || 1;
       }
       if (typeof callback === 'function') {
