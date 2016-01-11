@@ -27,7 +27,7 @@ function paginate(query, options, callback) {
   let lean = options.lean || false;
   let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
   let limit = options.hasOwnProperty('limit') ? options.limit : 10;
-  let page, offset, skip, promises;
+  let page, offset, skip, docsQuery, promises;
   if (options.offset) {
     offset = options.offset;
     skip = offset;
@@ -39,30 +39,35 @@ function paginate(query, options, callback) {
     offset = 0;
     skip = offset;
   }
-  let docsQuery = this.find(query)
-    .select(select)
-    .sort(sort)
-    .skip(skip)
-    .limit(limit)
-    .lean(lean);
-  if (populate) {
-    [].concat(populate).forEach((item) => {
-      docsQuery.populate(item);
-    });
+  if (limit > 0) {
+    docsQuery = this.find(query)
+      .select(select)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .lean(lean);
+    if (populate) {
+      [].concat(populate).forEach((item) => {
+        docsQuery.populate(item);
+      });
+    }
   }
-  let countQuery = this.count(query);
   promises = {
-    docs: docsQuery.exec(),
-    count: countQuery.exec()
+    docs: (docsQuery) ? docsQuery.exec() : false,
+    count: this.count(query).exec()
   };
-  promises = Object.keys(promises).map((x) => promises[x]);
+  promises = Object.keys(promises).map((index) => {
+    if (promises[index]) {
+      return promises[index];
+    }
+  });
   let promise = new Promise((resolve, reject) => {
     Promise.all(promises).then((data) => {
-      let docs = data[0];
+      let docs = (limit > 0) ? data[0] : [];
       let count = data[1];
       let result = {
         docs: docs,
-        count: count,
+        total: count,
         limit: limit
       };
       if (lean && leanWithId) {
@@ -76,7 +81,7 @@ function paginate(query, options, callback) {
       }
       if (page !== undefined) {
         result.page = page;
-        result.pages = Math.ceil(result.count / limit) || 1;
+        result.pages = Math.ceil(result.total / limit) || 1;
       }
       if (typeof callback === 'function') {
         return callback(null, result);
