@@ -1,5 +1,7 @@
 'use strict';
 
+const mongoose = require('mongoose');
+
 /**
  * @package mongoose-paginate
  * @param {Object} [query={}]
@@ -23,9 +25,9 @@ function paginate(query, options, callback) {
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
-  let leanWithId = options.leanWithId ? options.leanWithId : true;
-  let limit = options.limit ? options.limit : 10;
-  let page, offset, skip, promises;
+  let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
+  let limit = options.hasOwnProperty('limit') ? options.limit : 10;
+  let page, offset, skip, docsQuery, promises;
   if (options.offset) {
     offset = options.offset;
     skip = offset;
@@ -37,8 +39,8 @@ function paginate(query, options, callback) {
     offset = 0;
     skip = offset;
   }
-  if (limit) {
-    let docsQuery = this.find(query)
+  if (limit > 0) {
+    docsQuery = this.find(query)
       .select(select)
       .sort(sort)
       .skip(skip)
@@ -49,45 +51,58 @@ function paginate(query, options, callback) {
         docsQuery.populate(item);
       });
     }
-    promises = {
-      docs: docsQuery.exec(),
-      count: this.count(query).exec()
-    };
-    if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
-        docs.forEach((doc) => {
-          doc.id = String(doc._id);
-        });
-        return docs;
-      });
-    }
   }
-  promises = Object.keys(promises).map((x) => promises[x]);
-  return Promise.all(promises).then((data) => {
-    let result = {
-      docs: data.docs,
-      total: data.count,
-      limit: limit
-    };
-    if (offset !== undefined) {
-      result.offset = offset;
+  promises = {
+    docs: (docsQuery) ? docsQuery.exec() : false,
+    count: this.count(query).exec()
+  };
+  promises = Object.keys(promises).map((index) => {
+    if (promises[index]) {
+      return promises[index];
     }
-    if (page !== undefined) {
-      result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
-    }
-    if (typeof callback === 'function') {
-      return callback(null, result);
-    }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
   });
+  let promise = new Promise((resolve, reject) => {
+    Promise.all(promises).then((data) => {
+      let docs = (limit > 0) ? data[0] : [];
+      let count = data[1];
+      let result = {
+        docs: docs,
+        total: count,
+        limit: limit
+      };
+      if (lean && leanWithId) {
+        result.docs = result.docs.map((doc) => {
+          doc.id = String(doc._id);
+          return doc;
+        }); 
+      }
+      if (offset !== undefined) {
+        result.offset = offset;
+      }
+      if (page !== undefined) {
+        result.page = page;
+        result.pages = Math.ceil(result.total / limit) || 1;
+      }
+      if (typeof callback === 'function') {
+        return callback(null, result);
+      }
+      resolve(result);
+    }, (error) => {
+      if (typeof callback === 'function') {
+        return callback(error, null);
+      }
+      reject(error);
+    });
+  });
+  return promise;
 }
 
 /**
  * @param {Schema} schema
+ * use native ES6 promises verus mpromise
  */
+
+mongoose.Promise = global.Promise;
 
 module.exports = function(schema) {
   schema.statics.paginate = paginate;
