@@ -75,6 +75,16 @@ function paginate(query, options, callback) {
     if (page !== undefined) {
       result.page = page;
       result.pages = Math.ceil(data.count / limit) || 1;
+      var prev = page - 1;
+      var next = page + 1;
+      
+      if (prev > 0) {
+        result.prev = prev;
+      }
+      
+      if (next <= result.pages) {
+        result.next = next;
+      }
     }
     if (typeof callback === 'function') {
       return callback(null, result);
