@@ -23,13 +23,13 @@ function paginate(query, options, callback) {
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
-  let leanWithId = options.leanWithId ? options.leanWithId : true;
-  let limit = options.limit ? options.limit : 10;
-  let page, offset, skip, promises;
-  if (options.offset) {
+  let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
+  let limit = options.hasOwnProperty('limit') ? options.limit : 10;
+  let page, offset, skip, promises = [];
+  if (options.hasOwnProperty('offset')) {
     offset = options.offset;
     skip = offset;
-  } else if (options.page) {
+  } else if (options.hasOwnProperty('page')) {
     page = options.page;
     skip = (page - 1) * limit;
   } else {
@@ -37,7 +37,10 @@ function paginate(query, options, callback) {
     offset = 0;
     skip = offset;
   }
-  if (limit) {
+
+  promises.push(this.count(query).exec());
+
+  if (limit > 0) {
     let docsQuery = this.find(query)
       .select(select)
       .sort(sort)
@@ -49,24 +52,24 @@ function paginate(query, options, callback) {
         docsQuery.populate(item);
       });
     }
-    promises = {
-      docs: docsQuery.exec(),
-      count: this.count(query).exec()
-    };
+
+    let docPromise = docsQuery.exec();
     if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
+      docPromise = docPromise.then((docs) => {
         docs.forEach((doc) => {
           doc.id = String(doc._id);
         });
         return docs;
       });
     }
+
+    promises.push(docPromise);
   }
-  promises = Object.keys(promises).map((x) => promises[x]);
+
   return Promise.all(promises).then((data) => {
     let result = {
-      docs: data.docs,
-      total: data.count,
+      total: data[0],
+      docs: data[1] || [],
       limit: limit
     };
     if (offset !== undefined) {
@@ -74,14 +77,14 @@ function paginate(query, options, callback) {
     }
     if (page !== undefined) {
       result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
+      result.pages = Math.ceil(result.total / limit) || 1;
       let prev = page - 1;
       let next = page + 1;
-      
+
       if (prev > 0) {
         result.prev = prev;
       }
-      
+
       if (next <= result.pages) {
         result.next = next;
       }
@@ -89,9 +92,7 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
+    return result;
   });
 }
 
