@@ -28,6 +28,7 @@ function paginate(query, options, callback) {
   let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
   let limit = options.hasOwnProperty('limit') ? options.limit : 10;
   let page, offset, skip, docsQuery, promises;
+
   if (options.offset) {
     offset = options.offset;
     skip = offset;
@@ -39,6 +40,7 @@ function paginate(query, options, callback) {
     offset = 0;
     skip = offset;
   }
+
   if (limit > 0) {
     docsQuery = this.find(query)
       .select(select)
@@ -46,21 +48,17 @@ function paginate(query, options, callback) {
       .skip(skip)
       .limit(limit)
       .lean(lean);
+
     if (populate) {
-      [].concat(populate).forEach((item) => {
-        docsQuery.populate(item);
-      });
+      [].concat(populate).forEach((item) => docsQuery.populate(item));
     }
   }
-  promises = {
-    docs: (docsQuery) ? docsQuery.exec() : false,
-    count: this.count(query).exec()
-  };
-  promises = Object.keys(promises).map((index) => {
-    if (promises[index]) {
-      return promises[index];
-    }
-  });
+
+  promises = [
+    docsQuery ? docsQuery.exec() : Promise.resolve({}),
+    this.count(query).exec()
+  ];
+
   let promise = new Promise((resolve, reject) => {
     Promise.all(promises).then((data) => {
       let docs = (limit > 0) ? data[0] : [];
@@ -74,7 +72,7 @@ function paginate(query, options, callback) {
         result.docs = result.docs.map((doc) => {
           doc.id = String(doc._id);
           return doc;
-        }); 
+        });
       }
       if (offset !== undefined) {
         result.offset = offset;
@@ -94,6 +92,7 @@ function paginate(query, options, callback) {
       reject(error);
     });
   });
+
   return promise;
 }
 
