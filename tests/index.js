@@ -113,7 +113,33 @@ describe('mongoose-paginate', function() {
         expect(result.limit).to.equal(20);
         expect(result.page).to.equal(1);
         expect(result.pages).to.equal(5);
+        expect(result.next).to.equal(2);
+        expect(result.prev).to.be.undefined;
         expect(result).to.not.have.property('offset');
+      });
+    });
+    it('on the first page', function() {
+      return Book.paginate({}, { page: 1, limit: 20 }).then(function(result) {
+        expect(result.next).to.equal(2);
+        expect(result).to.not.have.property('prev');
+      });
+    });
+    it('on the last page', function() {
+      return Book.paginate({}, { page: 5, limit: 20 }).then(function(result) {
+        expect(result.prev).to.equal(4);
+        expect(result).to.not.have.property('next');
+      });
+    });
+    it('on the middle page', function() {
+      return Book.paginate({}, { page: 3, limit: 20 }).then(function(result) {
+        expect(result.prev).to.equal(2);
+        expect(result.next).to.equal(4);
+      });
+    });
+    it('with page 1 and limit', function() {
+      return Book.paginate({}, { page: 1, limit: 20 }).then(function(result) {
+        expect(result.next).to.equal(2);
+        expect(result).to.not.have.property('prev');
       });
     });
     it('with zero limit', function() {
