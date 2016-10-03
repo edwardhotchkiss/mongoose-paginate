@@ -1,58 +1,50 @@
 {
-    "name":        "mongoose-paginate",
-    "description": "Pagination plugin for Mongoose",
-    "version":     "5.0.0",
-
-    "author": {
-        "name":  "Edward Hotchkiss",
-        "email": "edward@edwardhotchkiss.com"
+  "name": "mongoose-paginate",
+  "description": "Pagination plugin for Mongoose",
+  "version": "5.0.3",
+  "author": {
+    "name": "Edward Hotchkiss",
+    "email": "edward@edwardhotchkiss.com"
+  },
+  "contributors": [
+    {
+      "name": "Edward Hotchkiss",
+      "email": "edward@edwardhotchkiss.com"
     },
-    "contributors": [
-        {
-            "name":  "Edward Hotchkiss",
-            "email": "edward@edwardhotchkiss.com"
-        },
-        {
-            "name":  "Nick Baugh",
-            "email": "niftylettuce@gmail.com"
-        },
-        {
-            "name":  "Dmitry Kirilyuk",
-            "email": "gk.joker@gmail.com"
-        }
-    ],
-
-    "repository": {
-        "type": "git",
-        "url":  "https://github.com/edwardhotchkiss/mongoose-paginate.git"
+    {
+      "name": "Nick Baugh",
+      "email": "niftylettuce@gmail.com"
     },
-
-    "license": "MIT",
-
-    "keywords": [
-        "mongoose",
-        "paginate",
-        "pagination",
-        "paging",
-        "page"
-    ],
-
-    "engines": {
-        "node": ">=4.0.0"
-    },
-
-    "dependencies": {
-        "bluebird": "3.0.5"
-    },
-
-    "devDependencies": {
-        "mongoose":         "4.2.8",
-        "mocha":            "2.3.4",
-        "chai":             "3.4.1",
-        "chai-as-promised": "5.1.0"
-    },
-
-    "scripts": {
-        "test": "./node_modules/.bin/mocha tests/*.js --timeout 5000"
+    {
+      "name": "Dmitry Kirilyuk",
+      "email": "gk.joker@gmail.com"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edwardhotchkiss/mongoose-paginate.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mongoose",
+    "paginate",
+    "pagination",
+    "paging",
+    "page"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "bluebird": "3.0.5"
+  },
+  "devDependencies": {
+    "mongoose": "4.2.8",
+    "mocha": "2.3.4",
+    "chai": "3.4.1",
+    "chai-as-promised": "5.1.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha tests/*.js --timeout 5000"
+  }
 }
