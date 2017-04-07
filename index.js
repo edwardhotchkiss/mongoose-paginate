@@ -12,6 +12,7 @@
  * @param {Number} [options.offset=0] - Use offset or page to set skip position
  * @param {Number} [options.page=1]
  * @param {Number} [options.limit=10]
+ * @param {Object} [options.hint] Hint for using a specific index
  * @param {Function} [callback]
  * @returns {Promise}
  */
@@ -26,6 +27,7 @@ function paginate(query, options, callback) {
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
   let page, offset, skip, promises;
+  let hint = options.hint;
   if (options.offset) {
     offset = options.offset;
     skip = offset;
@@ -48,6 +50,9 @@ function paginate(query, options, callback) {
       [].concat(populate).forEach((item) => {
         docsQuery.populate(item);
       });
+    }
+    if (hint) {
+      docsQuery.hint(hint);
     }
     promises = {
       docs: docsQuery.exec(),

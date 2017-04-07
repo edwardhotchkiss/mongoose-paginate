@@ -19,6 +19,7 @@ let BookSchema = new mongoose.Schema({
 });
 
 BookSchema.plugin(mongoosePaginate);
+BookSchema.index({ title: 1 });
 
 let Book = mongoose.model('Book', BookSchema);
 
@@ -139,6 +140,21 @@ describe('mongoose-paginate', function() {
     it('with populate', function() {
       return Book.paginate({}, { populate: 'author' }).then(function(result) {
         expect(result.docs[0].author.name).to.equal('Arthur Conan Doyle');
+      });
+    });
+    describe('with hint', function(done) {
+      it('fails with a bad hint', function() {
+        return Book.paginate({}, { hint: {} })
+          .then(() => done(new Error('should have rejected')))
+          .catch(err => {
+            expect(err).to.be.an('error');
+            expect(err.message).to.match(/bad hint/);
+            done();
+          })
+          .catch(done);
+      });
+      it('passes on a good hint', function() {
+        return Book.paginate({}, { hint: { title: 1 } });
       });
     });
     describe('with lean', function() {
