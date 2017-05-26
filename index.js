@@ -26,7 +26,7 @@ function paginate(query, options, callback) {
   let populate = options.populate;
   let lean = options.lean || false;
   let leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
-  let limit = options.hasOwnProperty('limit') ? options.limit : 10;
+  let limit = options.hasOwnProperty('limit') ? parseInt(options.limit) : 10;
   let page, offset, skip, docsQuery, promises;
 
   if (options.offset) {
@@ -103,7 +103,7 @@ function paginate(query, options, callback) {
 
 mongoose.Promise = global.Promise;
 
-module.exports = function(schema) {
+module.exports = (schema) => {
   schema.statics.paginate = paginate;
 };
 
