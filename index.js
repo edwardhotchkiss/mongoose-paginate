@@ -1,4 +1,5 @@
 'use strict';
+const leanWithId = require('./lib/leanWithId');
 
 /**
  * @package mongoose-paginate
@@ -23,6 +24,7 @@ function paginate(query, options, callback) {
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
+  let leanWithPopulate = options.leanWithPopulate ? options.leanWithPopulate : false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
   let page, offset, skip, promises;
@@ -54,12 +56,7 @@ function paginate(query, options, callback) {
       count: this.count(query).exec()
     };
     if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
-        docs.forEach((doc) => {
-          doc.id = String(doc._id);
-        });
-        return docs;
-      });
+      promises.docs = promises.docs.then((docs) => leanWithId.bind(null, leanWithPopulate));
     }
   }
   promises = Object.keys(promises).map((x) => promises[x]);

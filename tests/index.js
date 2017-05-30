@@ -1,5 +1,4 @@
 'use strict';
-
 let mongoose = require('mongoose');
 let expect = require('chai').expect;
 let mongoosePaginate = require('../index');
@@ -152,6 +151,13 @@ describe('mongoose-paginate', function() {
         return Book.paginate({}, { lean: true, leanWithId: false }).then(function(result) {
           expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
           expect(result.docs[0]).to.not.have.property('id');
+        });
+      });
+      it('with leanWithPopulate=true', function() {
+        return Book.paginate({}, { lean: true, leanWithPopulate: true }).populate('author').then(function(result) {
+          expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
+          expect(result.docs[0].author).to.not.be.an.instanceof(mongoose.Document);
+          expect(result.docs[0].author.id).to.equal(String(result.docs[0].author._id));
         });
       });
     });
