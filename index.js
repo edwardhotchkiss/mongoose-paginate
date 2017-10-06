@@ -22,6 +22,7 @@ function paginate(query, options, callback) {
   let select = options.select;
   let sort = options.sort;
   let populate = options.populate;
+  let collation = options.collation;
   let lean = options.lean || false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
@@ -43,7 +44,8 @@ function paginate(query, options, callback) {
       .sort(sort)
       .skip(skip)
       .limit(limit)
-      .lean(lean);
+      .lean(lean)
+      .collation(collation);
     if (populate) {
       [].concat(populate).forEach((item) => {
         docsQuery.populate(item);
