@@ -50,6 +50,7 @@ function paginate(query, options, callback) {
     if (noCursorTimeout) {
       docsQuery.noCursorTimeout();
     }
+
     if (populate) {
       [].concat(populate).forEach((item) => {
         docsQuery.populate(item);
@@ -85,8 +86,9 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
+    let promise = new Promise((res, rej) => {
+      res(result)
+    });
     return promise;
   });
 }
