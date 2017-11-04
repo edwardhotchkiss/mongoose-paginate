@@ -8,6 +8,7 @@
  * @param {Object|String} [options.sort]
  * @param {Array|Object|String} [options.populate]
  * @param {Boolean} [options.lean=false]
+ * @param {Boolean} [options.noCursorTimeout=false]
  * @param {Boolean} [options.leanWithId=true]
  * @param {Number} [options.offset=0] - Use offset or page to set skip position
  * @param {Number} [options.page=1]
@@ -23,6 +24,7 @@ function paginate(query, options, callback) {
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
+  let noCursorTimeout = options.noCursorTimeout || false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
   let page, offset, skip, promises;
@@ -44,6 +46,11 @@ function paginate(query, options, callback) {
       .skip(skip)
       .limit(limit)
       .lean(lean);
+
+    if (noCursorTimeout) {
+      docsQuery.noCursorTimeout();
+    }
+
     if (populate) {
       [].concat(populate).forEach((item) => {
         docsQuery.populate(item);
@@ -79,8 +86,9 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
+    let promise = new Promise((res, rej) => {
+      res(result)
+    });
     return promise;
   });
 }
