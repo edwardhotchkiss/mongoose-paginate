@@ -6,6 +6,7 @@
  * @param {Object} [options={}]
  * @param {Object|String} [options.select]
  * @param {Object|String} [options.sort]
+ * @param {Object} [options.collation]
  * @param {Array|Object|String} [options.populate]
  * @param {Boolean} [options.lean=false]
  * @param {Boolean} [options.leanWithId=true]
@@ -21,6 +22,7 @@ function paginate(query, options, callback) {
   options = Object.assign({}, paginate.options, options);
   let select = options.select;
   let sort = options.sort;
+  let collation  = options.collation || {};
   let populate = options.populate;
   let lean = options.lean || false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
@@ -41,6 +43,7 @@ function paginate(query, options, callback) {
     let docsQuery = this.find(query)
       .select(select)
       .sort(sort)
+      .collation(collation)
       .skip(skip)
       .limit(limit)
       .lean(lean);
