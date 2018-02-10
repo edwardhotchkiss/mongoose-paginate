@@ -23,7 +23,7 @@ function paginate(query, options, callback) {
   let sort = options.sort;
   let populate = options.populate;
   let lean = options.lean || false;
-  let leanWithId = options.leanWithId ? options.leanWithId : true;
+  let leanWithId = lean ? options.leanWithId : false;
   let limit = options.limit ? options.limit : 10;
   let page, offset, skip, promises;
   if (options.offset) {
