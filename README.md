@@ -43,7 +43,7 @@ var Model = mongoose.model('Model',  schema); // Model.paginate()
   - `[leanWithId=true]` {Boolean} - If `lean` and `leanWithId` are `true`, adds `id` field with string representation of `_id` to every document
   - `[offset=0]` {Number} - Use `offset` or `page` to set skip position
   - `[page=1]` {Number}
-  - `[limit=10]` {Number}
+  - `[limit=Number.MAX_SAFE_INTEGER]` {Number}
 * `[callback(err, result)]` - If specified the callback is called once pagination results are retrieved or when an error has occurred
 
 **Return value**
@@ -104,19 +104,6 @@ var options = {
 
 Book.paginate(query, options).then(function(result) {
   // ...
-});
-```
-
-#### Zero limit
-
-You can use `limit=0` to get only metadata:
-
-```js
-Model.paginate({}, { offset: 100, limit: 0 }).then(function(result) {
-  // result.docs - empty array
-  // result.total
-  // result.limit - 0
-  // result.offset - 100
 });
 ```
 
