@@ -24,7 +24,7 @@ function paginate(query, options, callback) {
   let populate = options.populate;
   let lean = options.lean || false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
-  let limit = options.limit ? options.limit : 10;
+  let limit = options.limit || Number.MAX_SAFE_INTEGER;
   let page, offset, skip, promises;
   if (options.offset) {
     offset = options.offset;
@@ -65,8 +65,8 @@ function paginate(query, options, callback) {
   promises = Object.keys(promises).map((x) => promises[x]);
   return Promise.all(promises).then((data) => {
     let result = {
-      docs: data.docs,
-      total: data.count,
+      docs: data[0],
+      total: data[1],
       limit: limit
     };
     if (offset !== undefined) {
@@ -74,14 +74,14 @@ function paginate(query, options, callback) {
     }
     if (page !== undefined) {
       result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
+      result.pages = Math.ceil(result.total / limit) || 1;
     }
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
+    return new Promise((resolve, reject) => { 
+        resolve(result);
+    });
   });
 }
 

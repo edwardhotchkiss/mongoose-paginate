@@ -1,10 +1,11 @@
 'use strict';
 
+let mongodbmemoryserver = require('mongodb-memory-server');
 let mongoose = require('mongoose');
 let expect = require('chai').expect;
 let mongoosePaginate = require('../index');
 
-let MONGO_URI = 'mongodb://127.0.0.1/mongoose_paginate_test';
+const mongod = new mongodbmemoryserver.default();
 
 let AuthorSchema = new mongoose.Schema({ name: String });
 let Author = mongoose.model('Author', AuthorSchema);
@@ -25,7 +26,11 @@ let Book = mongoose.model('Book', BookSchema);
 describe('mongoose-paginate', function() {
 
   before(function(done) {
-    mongoose.connect(MONGO_URI, done);
+    mongod
+    .getConnectionString()
+    .then(MONGO_URI => {
+        mongoose.connect(MONGO_URI, done);
+    })
   });
 
   before(function(done) {
@@ -68,20 +73,18 @@ describe('mongoose-paginate', function() {
   describe('paginates', function() {
     it('with criteria', function() {
       return Book.paginate({ title: 'Book #10' }).then((result) => {
-        console.log('with criteria logging ==================');
-        console.log('result:', result);
         expect(result.docs).to.have.length(1);
         expect(result.docs[0].title).to.equal('Book #10');
       });
     });
-    it('with default options (page=1, limit=10, lean=false)', function() {
+    it('with default options (page=1, limit=Number.MAX_SAFE_INTEGER, lean=false)', function() {
       return Book.paginate().then(function(result) {
-        expect(result.docs).to.have.length(10);
+        expect(result.docs).to.have.length(100);
         expect(result.docs[0]).to.be.an.instanceof(mongoose.Document);
         expect(result.total).to.equal(100);
-        expect(result.limit).to.equal(10);
+        expect(result.limit).to.equal(Number.MAX_SAFE_INTEGER);
         expect(result.page).to.equal(1);
-        expect(result.pages).to.equal(10);
+        expect(result.pages).to.equal(1);
         expect(result.offset).to.equal(0);
       });
     });
@@ -116,13 +119,13 @@ describe('mongoose-paginate', function() {
         expect(result).to.not.have.property('offset');
       });
     });
-    it('with zero limit', function() {
+    it('with no limit', function() {
       return Book.paginate({}, { page: 1, limit: 0 }).then(function(result) {
-        expect(result.docs).to.have.length(0);
+        expect(result.docs).to.have.length(100);
         expect(result.total).to.equal(100);
-        expect(result.limit).to.equal(0);
+        expect(result.limit).to.equal(Number.MAX_SAFE_INTEGER);
         expect(result.page).to.equal(1);
-        expect(result.pages).to.equal(Infinity);
+        expect(result.pages).to.equal(1);
       });
     });
     it('with select', function() {
@@ -151,7 +154,7 @@ describe('mongoose-paginate', function() {
       it('with leanWithId=false', function() {
         return Book.paginate({}, { lean: true, leanWithId: false }).then(function(result) {
           expect(result.docs[0]).to.not.be.an.instanceof(mongoose.Document);
-          expect(result.docs[0]).to.not.have.property('id');
+          expect(result.docs[0]).to.have.property('id');
         });
       });
     });

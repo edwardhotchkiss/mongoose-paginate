@@ -37,11 +37,12 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "mongoose": "4.3.4",
+    "chai": "3.4.1",
     "mocha": "2.3.4",
-    "chai": "3.4.1"
+    "mongodb-memory-server": "^1.7.0",
+    "mongoose": "4.3.4"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha tests/*.js -R spec --ui bdd --timeout 5000"
+    "test": "./node_modules/.bin/mocha tests/*.js -R spec --ui bdd --timeout 60000"
   }
 }
