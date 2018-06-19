@@ -1,7 +1,7 @@
 {
   "name": "mongoose-paginate",
   "description": "Pagination plugin for Mongoose",
-  "version": "5.0.2",
+  "version": "5.1.1",
   "author": {
     "name": "Edward Hotchkiss",
     "email": "edward@edwardhotchkiss.com"
@@ -35,11 +35,12 @@
   "engines": {
     "node": ">=4.2.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^5.1.6"
+  },
   "devDependencies": {
-    "mongoose": "4.3.4",
-    "mocha": "2.3.4",
-    "chai": "3.4.1"
+    "chai": "3.4.1",
+    "mocha": "2.3.4"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha tests/*.js -R spec --ui bdd --timeout 5000"
