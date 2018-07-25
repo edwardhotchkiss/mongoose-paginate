@@ -45,28 +45,28 @@ function paginate(query, options, callback) {
       .limit(limit)
       .lean(lean);
     if (populate) {
-      [].concat(populate).forEach((item) => {
+      [].concat(populate).forEach(item => {
         docsQuery.populate(item);
       });
     }
     promises = {
       docs: docsQuery.exec(),
-      count: this.count(query).exec()
+      count: this.countDocuments(query).exec()
     };
     if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
-        docs.forEach((doc) => {
+      promises.docs = promises.docs.then(docs => {
+        docs.forEach(doc => {
           doc.id = String(doc._id);
         });
         return docs;
       });
     }
   }
-  promises = Object.keys(promises).map((x) => promises[x]);
-  return Promise.all(promises).then((data) => {
+  promises = Object.keys(promises).map(x => promises[x]);
+  return Promise.all(promises).then(data => {
     let result = {
-      docs: data.docs,
-      total: data.count,
+      docs: data[0],
+      total: data[1],
       limit: limit
     };
     if (offset !== undefined) {
@@ -79,9 +79,7 @@ function paginate(query, options, callback) {
     if (typeof callback === 'function') {
       return callback(null, result);
     }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
+    return Promise.resolve(result);
   });
 }
 
