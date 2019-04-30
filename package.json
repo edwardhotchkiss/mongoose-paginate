@@ -33,7 +33,7 @@
     "page"
   ],
   "engines": {
-    "node": ">=4.2.4"
+    "node": ">=6.17.1"
   },
   "dependencies": {},
   "devDependencies": {
