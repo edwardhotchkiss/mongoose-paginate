@@ -37,7 +37,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "mongoose": "4.3.4",
+    "mongoose": "5.5.5",
     "mocha": "2.3.4",
     "chai": "3.4.1"
   },
