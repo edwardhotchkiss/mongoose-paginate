@@ -51,7 +51,7 @@ function paginate(query, options, callback) {
     }
     promises = {
       docs: docsQuery.exec(),
-      count: this.estimatedDocumentCount(query).exec()
+      count: this.countDocuments(query)
     };
     if (lean && leanWithId) {
       promises.docs = promises.docs.then((docs) => {
