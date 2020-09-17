@@ -51,7 +51,7 @@ function paginate(query, options, callback) {
     }
     promises = {
       docs: docsQuery.exec(),
-      count: this.count(query).exec()
+      count: this.countDocuments(query).exec(),
     };
     if (lean && leanWithId) {
       promises.docs = promises.docs.then((docs) => {
@@ -67,7 +67,7 @@ function paginate(query, options, callback) {
     let result = {
       docs: data.docs,
       total: data.count,
-      limit: limit
+      limit: limit,
     };
     if (offset !== undefined) {
       result.offset = offset;
@@ -89,7 +89,7 @@ function paginate(query, options, callback) {
  * @param {Schema} schema
  */
 
-module.exports = function(schema) {
+module.exports = function (schema) {
   schema.statics.paginate = paginate;
 };
 
