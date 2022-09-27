@@ -7,90 +7,46 @@
  * @param {Object|String} [options.select]
  * @param {Object|String} [options.sort]
  * @param {Array|Object|String} [options.populate]
- * @param {Boolean} [options.lean=false]
- * @param {Boolean} [options.leanWithId=true]
- * @param {Number} [options.offset=0] - Use offset or page to set skip position
+ * @param {Boolean} [options.lean=true]
  * @param {Number} [options.page=1]
- * @param {Number} [options.limit=10]
+ * @param {Number} [options.perPage=10]
  * @param {Function} [callback]
  * @returns {Promise}
  */
 
-function paginate(query, options, callback) {
-  query = query || {};
-  options = Object.assign({}, paginate.options, options);
-  let select = options.select;
-  let sort = options.sort;
-  let populate = options.populate;
-  let lean = options.lean || false;
-  let leanWithId = options.leanWithId ? options.leanWithId : true;
-  let limit = options.limit ? options.limit : 10;
-  let page, offset, skip, promises;
-  if (options.offset) {
-    offset = options.offset;
-    skip = offset;
-  } else if (options.page) {
-    page = options.page;
-    skip = (page - 1) * limit;
-  } else {
-    page = 1;
-    offset = 0;
-    skip = offset;
-  }
-  if (limit) {
-    let docsQuery = this.find(query)
-      .select(select)
-      .sort(sort)
-      .skip(skip)
-      .limit(limit)
-      .lean(lean);
-    if (populate) {
-      [].concat(populate).forEach((item) => {
-        docsQuery.populate(item);
-      });
-    }
-    promises = {
-      docs: docsQuery.exec(),
-      count: this.count(query).exec()
-    };
-    if (lean && leanWithId) {
-      promises.docs = promises.docs.then((docs) => {
-        docs.forEach((doc) => {
-          doc.id = String(doc._id);
+async function paginate(query = {}, options = {}, callback) {
+    const o = Object.assign({}, options);
+    o.page = o.page || 1;
+    o.sort = o.sort || { createdAt: -1 };
+    o.perPage = o.perPage || 10;
+    o.lean = o.lean ? o.lean : true;    
+    o.skip = (o.page - 1) * o.perPage;
+    
+    const mongooseObj = this.find(query);
+    if (o.select) mongooseObj.select(o.select)
+    if (o.sort) mongooseObj.sort(o.sort)
+    if (o.skip) mongooseObj.skip(o.skip)
+    if (o.perPage) mongooseObj.limit(o.perPage)
+    if (o.lean) mongooseObj.lean()
+    if (o.populate) {
+        [].concat(o.populate).forEach((item) => {
+            mongooseObj.populate(item);
         });
-        return docs;
-      });
     }
-  }
-  promises = Object.keys(promises).map((x) => promises[x]);
-  return Promise.all(promises).then((data) => {
-    let result = {
-      docs: data.docs,
-      total: data.count,
-      limit: limit
-    };
-    if (offset !== undefined) {
-      result.offset = offset;
-    }
-    if (page !== undefined) {
-      result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
-    }
-    if (typeof callback === 'function') {
-      return callback(null, result);
-    }
-    let promise = new Promise();
-    promise.resolve(result);
-    return promise;
-  });
+
+    o.data = await mongooseObj.exec();
+    o.documents = await this.countDocuments(query).exec();
+    o.pages = Math.ceil(o.documents / o.perPage) || 1  
+
+    if (typeof callback === 'function') return callback(null, o);
+    return o;
 }
 
 /**
  * @param {Schema} schema
  */
-
-module.exports = function(schema) {
-  schema.statics.paginate = paginate;
+module.exports = function (schema) {
+    schema.statics.paginate = paginate;
 };
 
 module.exports.paginate = paginate;
