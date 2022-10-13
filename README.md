@@ -53,7 +53,9 @@ Promise fulfilled with object having properties:
 * `total` {Number} - Total number of documents in collection that match a query
 * `limit` {Number} - Limit that was used
 * `[page]` {Number} - Only if specified or default `page`/`offset` values were used 
-* `[pages]` {Number} - Only if `page` specified or default `page`/`offset` values were used 
+* `[pages]` {Number} - Only if `page` specified or default `page`/`offset` values were used
+* `[prev]` {Number} - Only if there is a previous page to go to.
+* `[next]` {Number} - Only if there is a next page to go to.
 * `[offset]` {Number} - Only if specified or default `page`/`offset` values were used
 
 ### Examples
